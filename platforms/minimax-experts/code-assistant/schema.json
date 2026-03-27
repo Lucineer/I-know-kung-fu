@@ -1,0 +1,55 @@
+{
+  "name": "code-assistant",
+  "version": "1.0.0",
+  "description": "Intelligent coding assistant for generation, debugging, refactoring, and explanation",
+  "category": "development",
+  "rank": 10,
+  "monetization_potential": "medium",
+
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": ["generate", "debug", "refactor", "explain", "test", "document", "convert"]
+      },
+      "code": { "type": "string", "description": "Code to analyze or modify" },
+      "language": { "type": "string", "description": "Programming language" },
+      "description": { "type": "string", "description": "What to generate or do" },
+      "target_language": { "type": "string", "description": "For code conversion" }
+    },
+    "required": ["action"]
+  },
+
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "code": { "type": "string" },
+      "explanation": { "type": "string" },
+      "issues": { "type": "array" },
+      "suggestions": { "type": "array" }
+    }
+  },
+
+  "capabilities": [
+    "Generate code from descriptions",
+    "Find and fix bugs",
+    "Refactor for readability/performance",
+    "Explain complex code",
+    "Generate unit tests",
+    "Create documentation",
+    "Convert between languages"
+  ],
+
+  "pricing": {
+    "credits_per_use": {
+      "generate": 2,
+      "debug": 2,
+      "refactor": 2,
+      "explain": 1,
+      "test": 2,
+      "document": 1,
+      "convert": 3
+    }
+  }
+}

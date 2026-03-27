@@ -1,0 +1,65 @@
+{
+  "name": "Document Suite",
+  "version": "1.0.0",
+  "description": "Comprehensive document processing agent for Gumloop",
+  "category": "productivity",
+
+  "capabilities": [
+    {
+      "name": "create_document",
+      "description": "Create a new DOCX document",
+      "inputs": {
+        "content": { "type": "string", "required": true },
+        "template": { "type": "string", "required": false },
+        "style": { "type": "string", "default": "professional" }
+      },
+      "outputs": {
+        "document_url": { "type": "string" },
+        "metadata": { "type": "object" }
+      },
+      "credits": 2
+    },
+    {
+      "name": "convert_to_pdf",
+      "description": "Convert document to PDF",
+      "inputs": {
+        "document": { "type": "file", "required": true },
+        "quality": { "type": "string", "default": "high" }
+      },
+      "outputs": {
+        "pdf_url": { "type": "string" },
+        "page_count": { "type": "integer" }
+      },
+      "credits": 1
+    },
+    {
+      "name": "fill_template",
+      "description": "Fill a document template with data",
+      "inputs": {
+        "template": { "type": "string", "required": true },
+        "data": { "type": "object", "required": true }
+      },
+      "outputs": {
+        "document_url": { "type": "string" }
+      },
+      "credits": 2
+    },
+    {
+      "name": "merge_documents",
+      "description": "Merge multiple documents into one",
+      "inputs": {
+        "documents": { "type": "array", "items": "file", "required": true }
+      },
+      "outputs": {
+        "merged_url": { "type": "string" }
+      },
+      "credits": 3
+    }
+  ],
+
+  "pricing": {
+    "model": "credits",
+    "default_credits": 2,
+    "enterprise_available": true
+  }
+}

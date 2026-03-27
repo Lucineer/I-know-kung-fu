@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SuperInstance Agent Schema",
+  "description": "Standard schema for all SuperInstance agents across platforms",
+  "type": "object",
+  "required": ["name", "version", "description", "category", "capabilities"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Agent name (kebab-case)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 50
+    },
+    "category": {
+      "type": "string",
+      "enum": ["productivity", "development", "marketing", "finance", "research", "automation", "entertainment", "specialized"]
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string",
+      "default": "SuperInstance"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "inputs": {
+      "type": "object",
+      "description": "JSON Schema for inputs"
+    },
+    "outputs": {
+      "type": "object",
+      "description": "JSON Schema for outputs"
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": ["free", "tiered", "usage", "subscription", "credits", "enterprise"]
+        },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "price": { "type": "number" },
+              "limits": { "type": "object" }
+            }
+          }
+        },
+        "credits_per_use": {
+          "type": "object"
+        }
+      }
+    },
+    "monetization_potential": {
+      "type": "string",
+      "enum": ["highest", "high", "medium-high", "medium", "low-medium", "low"]
+    },
+    "source_repository": {
+      "type": "string"
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "config_path": { "type": "string" }
+        }
+      }
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": { "type": "object" },
+          "output": { "type": "object" }
+        }
+      }
+    }
+  }
+}

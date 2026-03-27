@@ -1,0 +1,47 @@
+{
+  "name": "DOCX to PDF Converter",
+  "description": "Convert DOCX documents to PDF automatically",
+  "categories": ["documents", "productivity"],
+  "actions": [
+    {
+      "name": "convert_to_pdf",
+      "display": {
+        "label": "Convert DOCX to PDF",
+        "description": "Convert a DOCX document to PDF format"
+      },
+      "operation": {
+        "inputFields": [
+          {
+            "key": "document",
+            "label": "DOCX File",
+            "type": "file",
+            "required": true,
+            "helpText": "The DOCX file to convert"
+          },
+          {
+            "key": "quality",
+            "label": "PDF Quality",
+            "type": "string",
+            "choices": ["low", "medium", "high"],
+            "default": "high"
+          }
+        ],
+        "outputFields": [
+          { "key": "pdf_url", "label": "PDF URL", "type": "string" },
+          { "key": "pdf_file", "label": "PDF File", "type": "file" },
+          { "key": "page_count", "label": "Page Count", "type": "integer" }
+        ]
+      }
+    }
+  ],
+  "triggers": [],
+  "searches": [],
+  "pricing": {
+    "model": "per_action",
+    "tiers": [
+      { "from": 1, "to": 100, "price": 0.10 },
+      { "from": 101, "to": 1000, "price": 0.07 },
+      { "from": 1001, "to": null, "price": 0.05 }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "name": "content-writer",
+  "version": "1.0.0",
+  "description": "AI content writer for blog posts, articles, marketing copy, and social media",
+  "category": "marketing",
+  "rank": 12,
+  "monetization_potential": "medium",
+
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": ["write", "rewrite", "optimize", "outline", "headlines", "calendar"]
+      },
+      "content_type": {
+        "type": "string",
+        "enum": ["blog", "article", "social", "email", "press_release", "landing_page"]
+      },
+      "topic": { "type": "string" },
+      "tone": { "type": "string", "enum": ["professional", "casual", "humorous", "formal", "persuasive"] },
+      "length": { "type": "string", "enum": ["short", "medium", "long"] },
+      "keywords": { "type": "array", "items": { "type": "string" } },
+      "existing_content": { "type": "string" }
+    },
+    "required": ["action", "content_type"]
+  },
+
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "content": { "type": "string" },
+      "word_count": { "type": "integer" },
+      "seo_score": { "type": "integer" },
+      "suggestions": { "type": "array" },
+      "headlines": { "type": "array" }
+    }
+  },
+
+  "capabilities": [
+    "Write blog posts and articles",
+    "Create marketing copy",
+    "Generate social media content",
+    "Optimize for SEO",
+    "Match brand voice",
+    "Create content calendars",
+    "Generate headlines"
+  ],
+
+  "pricing": {
+    "credits_per_use": {
+      "write": 2,
+      "rewrite": 1,
+      "optimize": 1,
+      "outline": 1,
+      "headlines": 1,
+      "calendar": 2
+    }
+  }
+}

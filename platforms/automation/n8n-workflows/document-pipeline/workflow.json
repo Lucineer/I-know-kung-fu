@@ -1,0 +1,75 @@
+{
+  "name": "Document Processing Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "document-process",
+        "responseMode": "responseNode"
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.superinstance.ai/v1/document/create",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "={{ $json }}"
+      },
+      "name": "Document Processor",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.superinstance.ai/v1/pdf/convert",
+        "method": "POST",
+        "jsonParameters": true,
+        "bodyParametersJson": "={{ $json }}"
+      },
+      "name": "PDF Converter",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "automation@company.com",
+        "toEmail": "={{ $json.recipient }}",
+        "subject": "Your Processed Document",
+        "text": "Please find your document attached.",
+        "attachments": "={{ $json.pdf_url }}"
+      },
+      "name": "Email Sender",
+      "type": "n8n-nodes-base.emailSend",
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"status\": \"success\", \"document_url\": $json.pdf_url } }}"
+      },
+      "name": "Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [1050, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[{"node": "Document Processor", "type": "main", "index": 0}]]
+    },
+    "Document Processor": {
+      "main": [[{"node": "PDF Converter", "type": "main", "index": 0}]]
+    },
+    "PDF Converter": {
+      "main": [[{"node": "Email Sender", "type": "main", "index": 0}]]
+    },
+    "Email Sender": {
+      "main": [[{"node": "Response", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

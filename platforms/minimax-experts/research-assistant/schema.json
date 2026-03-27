@@ -1,0 +1,55 @@
+{
+  "name": "research-assistant",
+  "version": "1.0.0",
+  "description": "Automated research assistant for information gathering, synthesis, and report generation",
+  "category": "productivity",
+  "rank": 8,
+  "monetization_potential": "medium",
+
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": ["research", "synthesize", "compare", "summarize", "cite", "report"]
+      },
+      "topic": { "type": "string", "description": "Research topic or question" },
+      "sources": { "type": "array", "items": { "type": "string" }, "description": "Specific sources to include" },
+      "depth": { "type": "string", "enum": ["quick", "standard", "comprehensive"], "default": "standard" },
+      "output_format": { "type": "string", "enum": ["report", "summary", "bibliography", "notes"] }
+    },
+    "required": ["action", "topic"]
+  },
+
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "findings": { "type": "array" },
+      "summary": { "type": "string" },
+      "sources": { "type": "array" },
+      "report": { "type": "string" },
+      "citations": { "type": "array" }
+    }
+  },
+
+  "capabilities": [
+    "Multi-source research",
+    "Fact verification",
+    "Source comparison",
+    "Literature review",
+    "Citation formatting",
+    "Report generation",
+    "Timeline construction"
+  ],
+
+  "pricing": {
+    "credits_per_use": {
+      "research": 3,
+      "synthesize": 2,
+      "compare": 2,
+      "summarize": 1,
+      "cite": 1,
+      "report": 4
+    }
+  }
+}
