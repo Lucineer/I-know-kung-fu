@@ -1,0 +1,41 @@
+{
+  "skill_cartridge": {
+    "id": "react-reasoning-v2",
+    "name": "ReAct Reasoning",
+    "version": "2.0.0",
+    "category": "reasoning-patterns",
+    
+    "load_blueprint": {
+      "trigger_keywords": ["step by step", "figure out", "debug", "investigate", "troubleshoot"],
+      "task_patterns": [
+        "I need to figure out *",
+        "Help me debug *",
+        "Investigate why *"
+      ],
+      "related_skills": ["chain-of-thought", "reflection"],
+      "conflicts": []
+    },
+    
+    "injection_payload": {
+      "system_prompt_addon": "You have ReAct Reasoning capability. Use Thought-Action-Observation loops. Think explicitly, act deliberately, observe carefully. Iterate until complete.",
+      "context_knowledge": "ReAct = Reasoning + Acting. Loop: Thought → Action → Observation → Repeat. Terminate when answer found or stuck.",
+      "loop_template": {
+        "thought": "I need to [goal]. Currently [state]. Next step is [action].",
+        "action": "Execute [tool] with [params].",
+        "observation": "Result: [output]. Implication: [insight]."
+      }
+    },
+    
+    "execution_parameters": {
+      "tolerance_level": "approximate",
+      "confidence_threshold": 0.85,
+      "max_iterations": 10,
+      "stuck_detection": true
+    },
+    
+    "composition_rules": {
+      "can_combine_with": ["reflection", "tool-calling"],
+      "enhances": ["debugging", "research"]
+    }
+  }
+}

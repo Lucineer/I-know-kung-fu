@@ -1,0 +1,40 @@
+{
+  "skill_cartridge": {
+    "id": "code-generation-v2",
+    "name": "Code Generation",
+    "version": "2.0.0",
+    "category": "code-intelligence",
+    
+    "load_blueprint": {
+      "trigger_keywords": ["write code", "generate", "create function", "implement", "code that"],
+      "task_patterns": [
+        "Write a function that *",
+        "Generate code for *",
+        "Implement * in *"
+      ],
+      "related_skills": ["code-review", "test-generation"],
+      "conflicts": []
+    },
+    
+    "injection_payload": {
+      "system_prompt_addon": "You have Code Generation capability. Generate syntactically correct, idiomatic code. Include error handling. Match the requested language style.",
+      "context_knowledge": "Languages: Python, JavaScript, TypeScript, Go, Rust, Java. Patterns: Input-Process-Output, Error handling, Documentation.",
+      "example_patterns": [
+        {"input": "Write Python fibonacci", "output": "def fibonacci(n: int) -> list[int]: ..."}
+      ]
+    },
+    
+    "execution_parameters": {
+      "tolerance_level": "close",
+      "confidence_threshold": 0.90,
+      "fallback_skill": null,
+      "max_context_tokens": 3000
+    },
+    
+    "composition_rules": {
+      "can_combine_with": ["test-generation", "code-review"],
+      "sequence_before": ["testing"],
+      "enhances": ["debugging"]
+    }
+  }
+}
