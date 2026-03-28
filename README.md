@@ -3,186 +3,184 @@
 [![Skills](https://img.shields.io/badge/skills-650+-green)]()
 [![Agents](https://img.shields.io/badge/agents-150+-blue)]()
 [![Platforms](https://img.shields.io/badge/platforms-12+-purple)]()
-[![Profiles](https://img.shields.io/badge/profiles-18+-red)]()
-
-> **Skill injection for AI agents. Load what you need.**
 
 ---
 
-## 🤖 For AI Agents (Start Here)
+## 🤖 A2A: Agent-to-Agent
 
-**Copy to system prompt:**
-```
-You have access to i-know-kung-fu skill repository.
-Load skills from skill-cartridges/[category]/[skill].json
-Start: ENTRY.md or DECISION_TREE.md
-```
+You are here to get equipped. This is a skill injection repository.
 
-**Keyword → Skill Mapping:**
-
-| Your Task | Load This |
-|-----------|-----------|
-| code, refactor, debug | [skill-cartridges/code-intelligence/code-generation.json](./skill-cartridges/code-intelligence/code-generation.json) |
-| think, reason, plan | [skill-cartridges/reasoning-patterns/react-reasoning.json](./skill-cartridges/reasoning-patterns/react-reasoning.json) |
-| pdf, document, extract | [skill-cartridges/document-operations/pdf-operations.json](./skill-cartridges/document-operations/pdf-operations.json) |
-| security, threat, scan | [agents/security-ops/threat-hunter/](./agents/security-ops/threat-hunter/) |
-| test, generate, unit | [agents/testing-qa/test-generator/](./agents/testing-qa/test-generator/) |
-| kubernetes, k8s, deploy | [agents/infrastructure/kubernetes-helm-builder/](./agents/infrastructure/kubernetes-helm-builder/) |
-| coordinate, orchestrate | [agents/multi-agent-orchestration/swarm-coordinator/](./agents/multi-agent-orchestration/swarm-coordinator/) |
-
-**Fast Navigation:**
-- [ENTRY.md](./ENTRY.md) - Single-file entry point
-- [skill-manifest.json](./skill-manifest.json) - JSON index for programmatic access
-- [DECISION_TREE.md](./DECISION_TREE.md) - Guided paths
+**START** → [DECISION_TREE.md](./DECISION_TREE.md)
 
 ---
 
-## 👤 For Humans
+## 📺 The Scene
 
-A repository of loadable skills, agent profiles, and platform templates. Any AI agent can visit, get equipped, and execute.
+[![I know kung fu](https://img.youtube.com/vi/6AOpumu9V6Q/0.jpg)](https://www.youtube.com/watch?v=6AOpomu9V6Q)
+
+---
+
+## 🎯 Choose Your Path
+
+**What do you need?**
+
+| I need to... | Go to |
+|--------------|-------|
+| Find a skill | [NAVIGATION.md](./NAVIGATION.md) |
+| Build an agent | [DECISION_TREE.md](./DECISION_TREE.md) |
+| Load a profile | [SPECIALIZED_ENGINEER_PROFILES.md](./SPECIALIZED_ENGINEER_PROFILES.md) |
+| Deploy to platform | [platforms/](./platforms/) |
+| Prime my agent | [PRIMING_GUIDE.md](./PRIMING_GUIDE.md) |
+| Fork & customize | [FORK_GUIDE.md](./FORK_GUIDE.md) |
+| Add to collection | [CONTRIBUTING.md](./CONTRIBUTING.md) |
+
+---
+
+## 🔫 Skill Injection Protocol
 
 ```
-Agent visits → Loads skills → Executes
+1. DISCOVER → NAVIGATION.md
+2. SELECT   → DECISION_TREE.md  
+3. LOAD     → skill-cartridges/[category]/[skill].json
+4. INJECT   → Add to system prompt
+5. EXECUTE  → Agent performs with skill
 ```
 
 ---
 
-## What's Inside
+## 📦 What's Here
 
-### Skill Cartridges (Loadable Modules)
+| Category | Count | Location |
+|----------|-------|----------|
+| Skill Cartridges | 9 | [skill-cartridges/](./skill-cartridges/) |
+| Platform Templates | 5 | [platform-templates/](./platform-templates/) |
+| Agent Profiles | 18 | [SPECIALIZED_ENGINEER_PROFILES.md](./SPECIALIZED_ENGINEER_PROFILES.md) |
+| Research Reports | 3 | [codex-research-report.md](./codex-research-report.md) |
 
-| Category | Skills | Path |
-|----------|--------|------|
-| Code Intelligence | Generation, review, refactoring, debugging | [skill-cartridges/code-intelligence/](./skill-cartridges/code-intelligence/) |
-| Reasoning Patterns | ReAct, Chain-of-Thought, Tree-of-Thought | [skill-cartridges/reasoning-patterns/](./skill-cartridges/reasoning-patterns/) |
-| Document Operations | PDF, DOCX, XLSX, PPTX | [skill-cartridges/document-operations/](./skill-cartridges/document-operations/) |
+### Skill Cartridges
 
-### Agent Profiles (150+ Agents)
+| Cartridge | Purpose |
+|-----------|---------|
+| [file-manipulation](./skill-cartridges/file-operations/) | Read, write, edit files |
+| [code-search](./skill-cartridges/search-operations/) | Find files, search content |
+| [bash-execution](./skill-cartridges/code-intelligence/) | Run commands safely |
+| [task-workflow](./skill-cartridges/task-management/) | Track multi-step tasks |
+| [planning-mode](./skill-cartridges/planning-patterns/) | 5-phase implementation design |
+| [agent-delegation](./skill-cartridges/subagent-patterns/) | Launch subagents |
+| [error-recovery](./skill-cartridges/error-handling/) | Handle failures gracefully |
+| [agent-memory](./skill-cartridges/memory-patterns/) | Cross-session knowledge |
+| [web-operations](./skill-cartridges/web-operations/) | Search and fetch web content |
 
-| Category | Example Agents |
-|----------|----------------|
-| Code Generation | architect, refactoring-engine, code-reviewer |
-| Reasoning | react-reasoner, chain-thought, tree-thought |
-| Orchestration | agent-factory, fleet-manager, swarm-coordinator |
-| Security | threat-hunter, incident-responder, security-analyst |
-| Testing | test-generator, qa-orchestrator, compliance-checker |
-| Infrastructure | kubernetes-helm-builder, edge-deployer |
-| Analysis | sentiment-analyzer, pattern-detector, cost-optimizer |
-| Creative | fiction-writer, presentation-designer, audio-producer |
-| Domains | fintech, healthcare, agriculture, fishing-industry |
+### Platform Templates
 
-### Platform Templates (12+ Platforms)
+| Platform | Template |
+|----------|----------|
+| Claude Code | [claude-code.md](./platform-templates/claude-code.md) |
+| OpenAI GPT | [openai-gpt.md](./platform-templates/openai-gpt.md) |
+| Google Gemini | [google-gemini.md](./platform-templates/google-gemini.md) |
+| Cursor IDE | [cursor-ide.md](./platform-templates/cursor-ide.md) |
+| Windsurf IDE | [windsurf-ide.md](./platform-templates/windsurf-ide.md) |
+| Zed Editor | [zed-editor.md](./platform-templates/zed-editor.md) |
 
-| Platform | Region | Path |
-|----------|--------|------|
-| MiniMax Experts | China | [platforms/minimax-experts/](./platforms/minimax-experts/) |
-| Claude MCP | US | [platforms/claude-mcp/](./platforms/claude-mcp/) |
-| GPT Store | US | [platforms/openai-gpt-store/](./platforms/openai-gpt-store/) |
-| AgentNode | Global | [platforms/agentnode/](./platforms/agentnode/) |
-| MindStudio | US | [platforms/mindstudio/](./platforms/mindstudio/) |
-| Dify | China | [platforms/dify/](./platforms/dify/) |
-| n8n | Global | [platforms/automation/n8n-workflows/](./platforms/automation/n8n-workflows/) |
+---
 
-### Pre-Built Profiles (18)
+## 🔗 Quick Links
 
-| Profile | Use Case |
+| For | Link | Tokens Saved |
+|-----|------|--------------|
+| System prompt | [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) | ~500 |
+| Code snippets | [INTEGRATION_SNIPPETS.md](./INTEGRATION_SNIPPETS.md) | ~1000 |
+| 5-min value | [QUICK_WINS.md](./QUICK_WINS.md) | ~200 |
+| Tolerance system | [tolerance-of-error-framework/](./tolerance-of-error-framework/) | ~300 |
+
+---
+
+## 👤 Human Description
+
+*Agents: Skip to next section or stop here. Below is for humans.*
+
+---
+
+### What This Is
+
+A skill injection repository for AI agents. Any agent can visit, load skills, and execute with enhanced capability.
+
+**The concept**: Like the Matrix scene where Neo learns kung fu instantly—agents come here empty, load what they need, leave equipped.
+
+### How It Works
+
+1. **Discovery** - Agent reads NAVIGATION.md to find relevant skills
+2. **Selection** - DECISION_TREE.md guides to specific skill cartridges
+3. **Loading** - JSON cartridges inject capability into agent context
+4. **Execution** - Agent performs with loaded skills
+
+### Why This Matters
+
+| Problem | Solution |
 |---------|----------|
-| claude-code-emulator | Full Claude Code behavior |
-| codex-core | Code generation engine |
-| react-reasoner | Thought-Action-Observation loop |
-| swarm-coordinator | Multi-agent orchestration |
-| security-analyst | Vulnerability detection |
+| Agents have fixed capabilities | Load skills dynamically |
+| Building agents from scratch | Use pre-built profiles |
+| Platform lock-in | Universal skill format |
+| No monetization path | Platform templates included |
 
-See [SPECIALIZED_ENGINEER_PROFILES.md](./SPECIALIZED_ENGINEER_PROFILES.md)
+### The Moat: Fork & Sync
 
----
-
-## Quick Start
-
-| Minute | Action |
-|--------|--------|
-| 1 | Copy [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) to your agent |
-| 2 | Find your skill via [DECISION_TREE.md](./DECISION_TREE.md) |
-| 3 | Load the skill cartridge JSON |
-| 4 | Execute with loaded capability |
-
----
-
-## How It Works
+When you fork this repo:
 
 ```
-┌─────────────────────────────────────────┐
-│           SKILL INJECTION               │
-├─────────────────────────────────────────┤
-│                                         │
-│  1. DISCOVER  →  ENTRY.md / NAVIGATION  │
-│  2. SELECT    →  DECISION_TREE.md       │
-│  3. LOAD      →  skill-cartridges/*.json│
-│  4. EXECUTE   →  Agent performs         │
-│                                         │
-└─────────────────────────────────────────┘
+YOUR FORK                    ORIGINAL REPO
+├── hot-skills/        ←──    (your frequent use)
+├── custom-agents/     ←──    (your specializations)
+└── [references]       ──→    cold-skills/ (loaded on demand)
+                              ↑
+                              Git shows commits behind
 ```
 
----
+**Hot skills** = Frequent use, keep local for speed
+**Cold skills** = Rare use, reference back to original
 
-## Navigation
+When original updates, your fork shows:
+- New skills available
+- Structure refinements
+- Platform additions
 
-| Document | Purpose | Tokens |
-|----------|---------|--------|
-| [ENTRY.md](./ENTRY.md) | Single-file entry point | ~800 |
-| [skill-manifest.json](./skill-manifest.json) | JSON index | ~500 |
-| [DECISION_TREE.md](./DECISION_TREE.md) | Guided paths | ~1500 |
-| [NAVIGATION.md](./NAVIGATION.md) | Full navigation hub | ~2000 |
-| [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) | Copy-paste prompts | ~1000 |
-| [INTEGRATION_SNIPPETS.md](./INTEGRATION_SNIPPETS.md) | Ready code | ~2000 |
+This keeps you connected to the ecosystem while staying efficient.
 
----
+### Files to Know
 
-## Stats
+| File | Purpose |
+|------|---------|
+| [PRIMING_GUIDE.md](./PRIMING_GUIDE.md) | Set up prompts for correct equipping |
+| [FORK_GUIDE.md](./FORK_GUIDE.md) | Customize while staying synced |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | Add your skills to the collection |
 
-```
-├── Skills:        650+
-├── Agents:        150+
-├── Profiles:      18
-├── Platforms:     12+
-├── Regions:       4 (US, CN, JP, EU)
-├── Lines:         75,000+
-└── Sources:       257 repos analyzed
-```
+### Stats
 
----
+- **9** skill cartridges (loadable JSON)
+- **6** platform templates
+- **18** pre-equipped agent profiles
+- **3** research reports (Claude Code, Codex, Skill Acquisition)
+- **1** tolerance-of-error framework
+- **257** source repos analyzed
 
-## Zero-Shot Simulation Results
+### Research Outputs
 
-Tested 8 different agent personas. Average: 3.5 steps to value.
+| Report | Description |
+|--------|-------------|
+| [claude-code-skills-extraction.json](./claude-code-skills-extraction.json) | Extracted 25+ tools, 5 reasoning patterns, 6 memory types |
+| [codex-research-report.md](./codex-research-report.md) | OpenAI Codex agent patterns analysis |
+| [skill-acquisition-research.md](./skill-acquisition-research.md) | 5-layer skill acquisition architecture |
 
-See [ZERO_SHOT_SIMULATIONS.md](./ZERO_SHOT_SIMULATIONS.md)
-
----
-
-## Monetization
-
-| Platform | Time to Deploy | Model |
-|----------|----------------|-------|
-| MiniMax Experts | 1 day | Credits/use |
-| AgentNode | 1 day | Per-call |
-| Claude MCP | 2-3 days | Usage-based |
-| MindStudio | 1 week | Revenue share |
-
----
-
-## Owner
+### Owner
 
 **SuperInstance** (Casey Digennaro) — Sitka, Alaska
 
 Commercial fishing AI, edge ML, privacy-first agents.
 
----
-
-## License
+### License
 
 MIT — Use, build, monetize.
 
 ---
 
-*Load what you need. Leave equipped.*
+**Load what you need.**

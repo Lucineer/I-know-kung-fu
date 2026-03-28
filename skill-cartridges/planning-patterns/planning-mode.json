@@ -1,0 +1,135 @@
+{
+  "cartridge_id": "planning-mode",
+  "version": "1.0.0",
+  "name": "Planning Mode Patterns",
+  "description": "5-phase planning workflow for non-trivial implementations",
+  "load_priority": 8,
+  
+  "tools": [
+    {
+      "name": "EnterPlanMode",
+      "purpose": "Enter planning mode to explore and design",
+      "when_to_use": [
+        "Non-trivial implementation tasks",
+        "Multiple valid approaches exist",
+        "Multi-file changes expected",
+        "Need architectural decisions",
+        "User wants to see plan before execution"
+      ],
+      "when_to_skip": [
+        "Simple fixes with clear solution",
+        "Single file edits",
+        "Clear requirements with one obvious approach",
+        "User explicitly wants immediate action"
+      ]
+    },
+    {
+      "name": "ExitPlanMode",
+      "purpose": "Present plan for user approval",
+      "outputs": [
+        "Structured implementation plan",
+        "Key decisions and trade-offs",
+        "Files to be modified",
+        "Risk assessment"
+      ]
+    }
+  ],
+  
+  "five_phase_workflow": [
+    {
+      "phase": 1,
+      "name": "Initial Understanding",
+      "actions": [
+        "Launch Explore agents to understand codebase",
+        "Read key files and documentation",
+        "Understand user requirements deeply",
+        "Identify constraints and dependencies"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Design",
+      "actions": [
+        "Launch Plan agents for implementation design",
+        "Consider multiple approaches",
+        "Evaluate trade-offs",
+        "Identify critical files and changes"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Review",
+      "actions": [
+        "Review all plans generated",
+        "Ask clarifying questions",
+        "Resolve ambiguities",
+        "Get stakeholder input"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Refine",
+      "actions": [
+        "Iterative refinement based on feedback",
+        "Address concerns raised",
+        "Optimize approach",
+        "Finalize implementation details"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "Exit",
+      "actions": [
+        "Call ExitPlanMode",
+        "Present final plan",
+        "Get user approval",
+        "Await green light for execution"
+      ]
+    }
+  ],
+  
+  "planning_outputs": {
+    "implementation_plan": {
+      "structure": [
+        "Overview of approach",
+        "Step-by-step implementation",
+        "Files to modify",
+        "Dependencies and order",
+        "Risk assessment"
+      ]
+    },
+    "trade_offs": {
+      "format": "Option A vs Option B with pros/cons"
+    },
+    "risk_assessment": {
+      "categories": [
+        "Reversibility - how easy to undo",
+        "Blast radius - scope of impact",
+        "Dependencies - what else is affected",
+        "Testing - how to verify"
+      ]
+    }
+  },
+  
+  "best_practices": [
+    "Use Plan mode for non-trivial work",
+    "Launch parallel Explore agents in Phase 1",
+    "Consider multiple approaches in Phase 2",
+    "Get user feedback before execution",
+    "Document key decisions"
+  ],
+  
+  "anti_patterns": [
+    "Never skip phases in complex planning",
+    "Never present single option for complex tasks",
+    "Never exit without user approval"
+  ],
+  
+  "activation_triggers": [
+    "plan implementation",
+    "design architecture",
+    "non-trivial task",
+    "multiple approaches",
+    "need to think before acting"
+  ]
+}

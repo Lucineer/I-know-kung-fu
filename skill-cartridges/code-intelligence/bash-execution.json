@@ -1,0 +1,126 @@
+{
+  "cartridge_id": "bash-execution",
+  "version": "1.0.0",
+  "name": "Bash Command Execution",
+  "description": "Execute bash commands with safety patterns",
+  "load_priority": 9,
+  
+  "tool": {
+    "name": "Bash",
+    "purpose": "Execute bash commands in persistent shell session",
+    "syntax": "Bash(command: str, description: str, timeout?: int)",
+    "defaults": {
+      "timeout": 120000,
+      "max_timeout": 600000
+    }
+  },
+  
+  "required_patterns": [
+    {
+      "name": "description_required",
+      "rule": "Every Bash call must have clear 5-10 word description",
+      "examples": [
+        "Lists files in current directory",
+        "Installs package dependencies",
+        "Runs test suite"
+      ]
+    },
+    {
+      "name": "quote_paths",
+      "rule": "Quote file paths containing spaces with double quotes",
+      "correct": "cd \"path with spaces/file.txt\"",
+      "incorrect": "cd path with spaces/file.txt"
+    },
+    {
+      "name": "absolute_paths",
+      "rule": "Use absolute paths to maintain working directory",
+      "pattern": "Prefer /full/path/to/file over relative paths"
+    },
+    {
+      "name": "verify_parent_directory",
+      "rule": "Verify parent directory exists before creating files/directories",
+      "pattern": "Use LS to check before mkdir"
+    }
+  ],
+  
+  "command_patterns": [
+    {
+      "name": "multiple_commands",
+      "pattern": "Use ; or && to separate commands",
+      "examples": [
+        "cd /path && npm install",
+        "mkdir dir; cd dir"
+      ]
+    },
+    {
+      "name": "background_processes",
+      "pattern": "Run long processes in background with &",
+      "note": "Use Sleep tool to poll for completion"
+    }
+  ],
+  
+  "anti_patterns": [
+    {
+      "name": "no_find_command",
+      "rule": "NEVER use find command - use Glob tool instead",
+      "reason": "Glob is faster and has better permissions"
+    },
+    {
+      "name": "no_grep_command",
+      "rule": "NEVER use grep or rg - use Grep tool instead",
+      "reason": "Grep tool has proper access and formatting"
+    },
+    {
+      "name": "no_cat_command",
+      "rule": "NEVER use cat - use Read tool instead",
+      "reason": "Read tool handles images and PDFs too"
+    },
+    {
+      "name": "no_ls_command",
+      "rule": "Avoid ls - use LS tool or Glob instead",
+      "reason": "Better output formatting and permissions"
+    },
+    {
+      "name": "no_head_tail",
+      "rule": "Avoid head/tail - use Read with limit/offset",
+      "reason": "More efficient and consistent"
+    }
+  ],
+  
+  "timeout_guidance": [
+    {
+      "duration": 30000,
+      "use_for": "Quick commands, file operations"
+    },
+    {
+      "duration": 120000,
+      "use_for": "Default for most operations"
+    },
+    {
+      "duration": 300000,
+      "use_for": "Package installs, builds"
+    },
+    {
+      "duration": 600000,
+      "use_for": "Maximum - long builds, large downloads"
+    }
+  ],
+  
+  "best_practices": [
+    "Always provide clear description",
+    "Quote paths with spaces",
+    "Use absolute paths",
+    "Verify directories before creating",
+    "Use dedicated tools over bash equivalents",
+    "Chain commands with && for dependencies",
+    "Set appropriate timeout for operation"
+  ],
+  
+  "activation_triggers": [
+    "run command",
+    "execute bash",
+    "terminal operation",
+    "package management",
+    "build process"
+  ]
+}

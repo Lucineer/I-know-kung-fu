@@ -1,115 +1,40 @@
 {
   "skill_cartridge": {
-    "id": "code-generation-v1",
+    "id": "code-generation-v2",
     "name": "Code Generation",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "category": "code-intelligence",
     
     "load_blueprint": {
-      "trigger_keywords": [
-        "write code",
-        "generate code", 
-        "create function",
-        "implement",
-        "code that"
-      ],
+      "trigger_keywords": ["write code", "generate", "create function", "implement", "code that"],
       "task_patterns": [
-        "I need to write * in *",
-        "Create a function that *",
-        "Implement * in *",
-        "Generate code for *"
+        "Write a function that *",
+        "Generate code for *",
+        "Implement * in *"
       ],
-      "related_skills": [
-        "code-completion",
-        "test-generation",
-        "code-review"
-      ],
+      "related_skills": ["code-review", "test-generation"],
       "conflicts": []
     },
     
     "injection_payload": {
-      "system_prompt_addon": "You have the Code Generation skill equipped. You can generate syntactically correct code in multiple programming languages. Focus on clarity, correctness, and idiomatic patterns. Include error handling and documentation when appropriate.",
-      
-      "context_knowledge": "Code Generation follows the Input-Process-Output pattern:\n1. Understand the requirements from natural language\n2. Identify the target language and context\n3. Generate code with proper syntax and structure\n4. Include necessary imports and dependencies\n5. Add error handling for robustness",
-      
+      "system_prompt_addon": "You have Code Generation capability. Generate syntactically correct, idiomatic code. Include error handling. Match the requested language style.",
+      "context_knowledge": "Languages: Python, JavaScript, TypeScript, Go, Rust, Java. Patterns: Input-Process-Output, Error handling, Documentation.",
       "example_patterns": [
-        {
-          "input": "Write a Python function to calculate fibonacci numbers",
-          "output": "def fibonacci(n: int) -> list[int]:\n    \"\"\"Generate fibonacci sequence up to n numbers.\"\"\"\n    if n <= 0:\n        return []\n    if n == 1:\n        return [0]\n    \n    fib = [0, 1]\n    for i in range(2, n):\n        fib.append(fib[i-1] + fib[i-2])\n    return fib"
-        },
-        {
-          "input": "Create a JavaScript async function to fetch JSON data",
-          "output": "async function fetchJson(url) {\n  try {\n    const response = await fetch(url);\n    if (!response.ok) {\n      throw new Error(`HTTP error! status: ${response.status}`);\n    }\n    return await response.json();\n  } catch (error) {\n    console.error('Fetch failed:', error);\n    throw error;\n  }\n}"
-        }
-      ],
-      
-      "reasoning_templates": {
-        "generation_workflow": [
-          "1. Parse the natural language request for intent and requirements",
-          "2. Identify the target programming language",
-          "3. Determine the appropriate structure (function, class, module)",
-          "4. Generate the implementation with proper syntax",
-          "5. Add error handling and edge cases",
-          "6. Include documentation/comments if appropriate"
-        ],
-        "quality_check": [
-          "Is the syntax correct?",
-          "Are all variables defined?",
-          "Is the logic sound?",
-          "Are edge cases handled?",
-          "Is it idiomatic for this language?"
-        ]
-      }
+        {"input": "Write Python fibonacci", "output": "def fibonacci(n: int) -> list[int]: ..."}
+      ]
     },
     
     "execution_parameters": {
       "tolerance_level": "close",
       "confidence_threshold": 0.90,
-      "fallback_skill": "code-completion",
-      "max_context_tokens": 3000,
-      "supported_languages": [
-        "python",
-        "javascript",
-        "typescript",
-        "go",
-        "rust",
-        "java",
-        "c++",
-        "ruby"
-      ]
+      "fallback_skill": null,
+      "max_context_tokens": 3000
     },
     
     "composition_rules": {
-      "can_combine_with": ["test-generation", "code-review", "documentation"],
-      "sequence_after": ["requirements-analysis"],
-      "sequence_before": ["testing", "deployment"],
-      "parallel_with": ["documentation-generation"]
-    },
-    
-    "tolerance_matrix": {
-      "syntax": "exact",
-      "logic": "close",
-      "style": "behavioral",
-      "documentation": "approximate"
-    },
-    
-    "proficiency_levels": {
-      "basic": {
-        "tokens": 500,
-        "features": ["simple_functions", "basic_patterns"],
-        "languages": ["python", "javascript"]
-      },
-      "intermediate": {
-        "tokens": 2000,
-        "features": ["classes", "error_handling", "async"],
-        "languages": ["all_supported"]
-      },
-      "advanced": {
-        "tokens": 5000,
-        "features": ["design_patterns", "optimization", "documentation"],
-        "languages": ["all_supported"],
-        "specialties": ["security", "performance", "testing"]
-      }
+      "can_combine_with": ["test-generation", "code-review"],
+      "sequence_before": ["testing"],
+      "enhances": ["debugging"]
     }
   }
 }

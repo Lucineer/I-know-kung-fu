@@ -1,0 +1,112 @@
+{
+  "cartridge_id": "file-manipulation",
+  "version": "1.0.0",
+  "name": "File Manipulation Mastery",
+  "description": "Complete file reading, writing, and editing capabilities",
+  "load_priority": 10,
+  
+  "tools": [
+    {
+      "name": "Read",
+      "purpose": "Read files with support for images, PDFs, Jupyter notebooks",
+      "syntax": "Read(filepath: str, limit?: int, offset?: int)",
+      "patterns": [
+        "Always use absolute paths",
+        "Default 2000 lines from beginning",
+        "Can read images (PNG, JPG, GIF) and PDFs",
+        "Reads Jupyter notebooks (.ipynb)",
+        "Limit/offset for large files"
+      ],
+      "anti_patterns": [
+        "Never use cat/head/tail - use Read instead",
+        "Never read binary files as text"
+      ]
+    },
+    {
+      "name": "Write",
+      "purpose": "Write files to filesystem",
+      "syntax": "Write(filepath: str, content: str)",
+      "patterns": [
+        "Overwrites existing files",
+        "Must read first if file exists",
+        "Prefer Edit for modifications",
+        "Never create documentation unless explicitly requested"
+      ],
+      "anti_patterns": [
+        "Never write without reading existing files first",
+        "Never create new files when editing is sufficient"
+      ]
+    },
+    {
+      "name": "Edit",
+      "purpose": "Exact string replacement in files",
+      "syntax": "Edit(filepath: str, old_str: str, new_str: str, replace_all?: bool)",
+      "patterns": [
+        "Preserve exact indentation (tabs/spaces)",
+        "old_string must be unique in file",
+        "Use replace_all for renaming across file",
+        "Always prefer over Write for modifications"
+      ],
+      "anti_patterns": [
+        "Never use non-unique old_string",
+        "Never change indentation from original"
+      ]
+    },
+    {
+      "name": "MultiEdit",
+      "purpose": "Multiple edits in single atomic operation",
+      "syntax": "MultiEdit(filepath: str, edits: Array<{old_str, new_str, replace_all?}>)",
+      "patterns": [
+        "Edits applied sequentially",
+        "Atomic - all succeed or none",
+        "Plan edits to avoid conflicts"
+      ]
+    },
+    {
+      "name": "NotebookEdit",
+      "purpose": "Edit Jupyter notebook cells",
+      "syntax": "NotebookEdit(filepath: str, cell_number: int, new_source: str)",
+      "patterns": [
+        "For .ipynb files only",
+        "Edit cell source directly"
+      ]
+    }
+  ],
+  
+  "workflow_patterns": [
+    {
+      "name": "safe_edit_workflow",
+      "steps": [
+        "Read file first to understand content",
+        "Identify unique string to replace",
+        "Use Edit for single change, MultiEdit for multiple",
+        "Verify change by reading again if needed"
+      ]
+    },
+    {
+      "name": "create_file_workflow",
+      "steps": [
+        "Verify parent directory exists",
+        "Check if file already exists",
+        "Use Write with complete content",
+        "Verify creation successful"
+      ]
+    }
+  ],
+  
+  "best_practices": [
+    "Always read before modifying",
+    "Prefer Edit over Write for existing files",
+    "Use absolute paths always",
+    "Quote paths with spaces",
+    "Delete unused code completely - no compatibility hacks"
+  ],
+  
+  "activation_triggers": [
+    "file reading",
+    "file editing", 
+    "code modification",
+    "configuration changes",
+    "reading images or PDFs"
+  ]
+}

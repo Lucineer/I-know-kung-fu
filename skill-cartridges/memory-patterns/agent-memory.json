@@ -1,0 +1,115 @@
+{
+  "cartridge_id": "agent-memory",
+  "version": "1.0.0",
+  "name": "Memory Management Patterns",
+  "description": "Cross-conversation knowledge building and memory consolidation",
+  "load_priority": 7,
+  
+  "memory_types": [
+    {
+      "name": "session_memory",
+      "description": "Context within a single session",
+      "pattern": "Sliding window with optional summarization",
+      "use_for": [
+        "Current conversation context",
+        "Recent tool calls and results",
+        "Active task state"
+      ]
+    },
+    {
+      "name": "agent_memory",
+      "description": "Cross-conversation knowledge building",
+      "pattern": "Domain-specific memory update instructions",
+      "use_for": [
+        "User preferences",
+        "Project conventions",
+        "Learned patterns",
+        "Important context for future sessions"
+      ],
+      "update_triggers": [
+        "User feedback about preferences",
+        "Discovered conventions",
+        "Important decisions made",
+        "Patterns worth remembering"
+      ]
+    },
+    {
+      "name": "nested_memory",
+      "description": "Nested memory file contents",
+      "pattern": "Hierarchical memory organization",
+      "use_for": [
+        "Topic-specific knowledge",
+        "Modular memory sections"
+      ]
+    },
+    {
+      "name": "team_memory",
+      "description": "Shared team memory files",
+      "pattern": "Coordinated knowledge across agents",
+      "use_for": [
+        "Team conventions",
+        "Shared project knowledge",
+        "Coordination state"
+      ]
+    }
+  ],
+  
+  "consolidation_patterns": [
+    {
+      "name": "dream_memory_consolidation",
+      "description": "Multi-phase memory consolidation pass",
+      "phases": [
+        {
+          "phase": 1,
+          "name": "orient",
+          "action": "Orient on existing memories"
+        },
+        {
+          "phase": 2,
+          "name": "gather",
+          "action": "Gather recent signal from logs"
+        },
+        {
+          "phase": 3,
+          "name": "merge",
+          "action": "Merge updates into topic files"
+        },
+        {
+          "phase": 4,
+          "name": "prune",
+          "action": "Prune index and remove stale entries"
+        }
+      ]
+    }
+  ],
+  
+  "memory_update_triggers": [
+    "User explicitly states preference",
+    "Pattern emerges across multiple sessions",
+    "Critical project decision made",
+    "Convention discovered in codebase",
+    "User corrects agent behavior"
+  ],
+  
+  "best_practices": [
+    "Update memory when learning something important",
+    "Keep memory focused and actionable",
+    "Prune outdated information",
+    "Organize by topic for retrieval",
+    "Include context for future sessions"
+  ],
+  
+  "anti_patterns": [
+    "Never store trivial or obvious information",
+    "Never duplicate information across memory types",
+    "Never let memory grow unbounded"
+  ],
+  
+  "activation_triggers": [
+    "remember for next time",
+    "user preference stated",
+    "pattern discovered",
+    "memory consolidation",
+    "cross-session knowledge"
+  ]
+}

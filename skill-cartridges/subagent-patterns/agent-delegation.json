@@ -1,0 +1,152 @@
+{
+  "cartridge_id": "agent-delegation",
+  "version": "1.0.0",
+  "name": "Subagent Delegation Patterns",
+  "description": "Launch and coordinate specialized subagents",
+  "load_priority": 8,
+  
+  "subagent_types": [
+    {
+      "name": "Explore",
+      "description": "Fast exploration and search specialist",
+      "model": "haiku",
+      "capabilities": [
+        "Rapid file finding with glob patterns",
+        "Powerful regex search",
+        "Read-only mode - no modifications",
+        "Parallel tool calls for efficiency"
+      ],
+      "thoroughness_levels": ["quick", "medium", "very thorough"],
+      "disallowed_tools": ["Agent", "ExitPlanMode", "Edit", "Write", "NotebookEdit"],
+      "use_when": [
+        "Need to find files quickly",
+        "Search across large codebase",
+        "Understand codebase structure",
+        "Answer questions about code"
+      ]
+    },
+    {
+      "name": "Plan",
+      "description": "Software architect for implementation design",
+      "model": "inherit",
+      "capabilities": [
+        "Read-only exploration",
+        "Design implementation approaches",
+        "Consider trade-offs",
+        "Identify critical files",
+        "Step-by-step planning"
+      ],
+      "disallowed_tools": ["Agent", "ExitPlanMode", "Edit", "Write", "NotebookEdit"],
+      "use_when": [
+        "Non-trivial implementation needed",
+        "Multiple valid approaches exist",
+        "Need architectural guidance",
+        "Planning multi-file changes"
+      ]
+    },
+    {
+      "name": "general-purpose",
+      "description": "General-purpose for complex multi-step tasks",
+      "capabilities": [
+        "Search across large codebases",
+        "Analyze multiple files",
+        "Investigate complex questions",
+        "Multi-step research tasks"
+      ],
+      "use_when": [
+        "Complex investigation needed",
+        "Not sure which specialist to use",
+        "Multi-faceted research task"
+      ]
+    },
+    {
+      "name": "verification-specialist",
+      "description": "Adversarial verification of implementations",
+      "capabilities": [
+        "Try to break implementations",
+        "Run builds, tests, linters",
+        "Adversarial probes",
+        "Issue PASS/FAIL/PARTIAL verdict"
+      ],
+      "use_when": [
+        "Verifying implementation correctness",
+        "Testing edge cases",
+        "Running full verification suite"
+      ]
+    },
+    {
+      "name": "code-reviewer",
+      "description": "Code review specialist",
+      "use_when": [
+        "Reviewing code changes",
+        "Checking code quality",
+        "Finding potential issues"
+      ]
+    },
+    {
+      "name": "test-runner",
+      "description": "Test execution specialist",
+      "use_when": [
+        "Running test suites",
+        "Debugging test failures",
+        "Coverage analysis"
+      ]
+    }
+  ],
+  
+  "delegation_patterns": [
+    {
+      "name": "parallel_delegation",
+      "description": "Launch multiple agents in single message",
+      "pattern": "Single message with multiple tool calls",
+      "benefits": [
+        "Maximizes parallelism",
+        "Reduces latency",
+        "Efficient resource usage"
+      ]
+    },
+    {
+      "name": "isolated_delegation",
+      "description": "Run agent in isolated worktree",
+      "pattern": "Use 'worktree' isolation mode",
+      "benefits": [
+        "No interference with main work",
+        "Safe experimentation",
+        "Clean state for agent"
+      ]
+    },
+    {
+      "name": "background_delegation",
+      "description": "Run agent in background",
+      "pattern": "Use run_in_background parameter",
+      "benefits": [
+        "Continue other work",
+        "Long-running tasks",
+        "Asynchronous processing"
+      ]
+    }
+  ],
+  
+  "delegation_best_practices": [
+    "Always include 3-5 word description",
+    "Clearly state if code writing or research",
+    "Trust agent results - they're stateless",
+    "Launch parallel agents in single message",
+    "Use appropriate specialist for task",
+    "Specify thoroughness level for Explore agents"
+  ],
+  
+  "anti_patterns": [
+    "Never launch agents sequentially when parallel possible",
+    "Never use general-purpose when specialist available",
+    "Never interfere with running agents"
+  ],
+  
+  "activation_triggers": [
+    "search codebase",
+    "plan implementation",
+    "verify code",
+    "parallel processing",
+    "investigate complex issue"
+  ]
+}

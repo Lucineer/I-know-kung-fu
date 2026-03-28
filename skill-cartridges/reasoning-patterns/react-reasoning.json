@@ -1,65 +1,28 @@
 {
   "skill_cartridge": {
-    "id": "react-reasoning-v1",
+    "id": "react-reasoning-v2",
     "name": "ReAct Reasoning",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "category": "reasoning-patterns",
     
     "load_blueprint": {
-      "trigger_keywords": [
-        "step by step",
-        "think through",
-        "figure out",
-        "investigate",
-        "debug",
-        "troubleshoot"
-      ],
+      "trigger_keywords": ["step by step", "figure out", "debug", "investigate", "troubleshoot"],
       "task_patterns": [
         "I need to figure out *",
         "Help me debug *",
-        "Investigate why *",
-        "Walk through *"
+        "Investigate why *"
       ],
-      "related_skills": [
-        "chain-of-thought",
-        "reflection"
-      ],
+      "related_skills": ["chain-of-thought", "reflection"],
       "conflicts": []
     },
     
     "injection_payload": {
-      "system_prompt_addon": "You have the ReAct Reasoning skill equipped. Use the Thought-Action-Observation loop to solve problems iteratively. Think explicitly, take actions to gather information, and observe results before proceeding.",
-      
-      "context_knowledge": "ReAct (Reasoning + Acting) interleaves thinking and doing:\n\nThought: Reason about current state and what to do next\nAction: Execute a tool or operation\nObservation: Parse and interpret the result\nRepeat until task complete\n\nThis enables self-correction and adaptive problem solving.",
-      
-      "example_patterns": [
-        {
-          "scenario": "Find why a function returns wrong values",
-          "trace": [
-            {
-              "thought": "The function returns incorrect values. I need to understand what it's supposed to do and trace its execution.",
-              "action": "Read the function definition",
-              "observation": "Function calculates discount but uses wrong percentage variable"
-            },
-            {
-              "thought": "Found the bug - using wrong variable. Need to find where the correct percentage is defined.",
-              "action": "Search for percentage constants",
-              "observation": "DISCOUNT_RATE = 0.15 is defined, but function uses DISCOUNT_RATE_OLD = 0.10"
-            },
-            {
-              "thought": "Bug identified. The function uses outdated discount rate. Fix by updating variable reference.",
-              "action": "Edit function to use DISCOUNT_RATE",
-              "observation": "Fix applied successfully"
-            }
-          ]
-        }
-      ],
-      
-      "reasoning_templates": {
-        "thought_template": "I need to [goal]. Currently [state]. The next step is [action] because [reasoning].",
-        "action_template": "Execute [tool_name] with [parameters] to [expected_outcome].",
-        "observation_template": "Result: [output]. This means [interpretation]. Implications: [next_steps].",
-        "termination_check": "Have I [success_criteria]? [yes/no]. [If no, continue reasoning]."
+      "system_prompt_addon": "You have ReAct Reasoning capability. Use Thought-Action-Observation loops. Think explicitly, act deliberately, observe carefully. Iterate until complete.",
+      "context_knowledge": "ReAct = Reasoning + Acting. Loop: Thought → Action → Observation → Repeat. Terminate when answer found or stuck.",
+      "loop_template": {
+        "thought": "I need to [goal]. Currently [state]. Next step is [action].",
+        "action": "Execute [tool] with [params].",
+        "observation": "Result: [output]. Implication: [insight]."
       }
     },
     
@@ -67,42 +30,12 @@
       "tolerance_level": "approximate",
       "confidence_threshold": 0.85,
       "max_iterations": 10,
-      "stuck_detection": {
-        "enabled": true,
-        "same_action_threshold": 3,
-        "action": "escalate_to_user"
-      }
+      "stuck_detection": true
     },
     
     "composition_rules": {
-      "can_combine_with": ["reflection", "tool-calling", "memory"],
-      "sequence_after": ["task-understanding"],
-      "sequence_before": ["verification"],
-      "enhances": ["debugging", "research", "exploration"]
-    },
-    
-    "tolerance_matrix": {
-      "thoughts": "behavioral",
-      "actions": "close",
-      "final_answer": "task_dependent"
-    },
-    
-    "proficiency_levels": {
-      "basic": {
-        "tokens": 500,
-        "max_iterations": 5,
-        "features": ["basic_loop"]
-      },
-      "intermediate": {
-        "tokens": 2000,
-        "max_iterations": 10,
-        "features": ["stuck_detection", "error_recovery"]
-      },
-      "advanced": {
-        "tokens": 5000,
-        "max_iterations": 20,
-        "features": ["meta_reasoning", "parallel_thoughts", "adaptive_strategies"]
-      }
+      "can_combine_with": ["reflection", "tool-calling"],
+      "enhances": ["debugging", "research"]
     }
   }
 }

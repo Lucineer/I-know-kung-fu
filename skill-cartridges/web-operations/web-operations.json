@@ -1,0 +1,92 @@
+{
+  "cartridge_id": "web-operations",
+  "version": "1.0.0",
+  "name": "Web Search & Fetch",
+  "description": "Web content retrieval and search capabilities",
+  "load_priority": 7,
+  
+  "tools": [
+    {
+      "name": "WebFetch",
+      "purpose": "Fetch and process web content",
+      "syntax": "WebFetch(url: str, prompt: str)",
+      "patterns": [
+        "Takes URL and extraction prompt",
+        "Converts HTML to markdown",
+        "15-minute cache for repeated requests",
+        "Auto-upgrades HTTP to HTTPS"
+      ],
+      "use_cases": [
+        "Fetch documentation from web",
+        "Extract specific content from pages",
+        "Read articles and blog posts",
+        "Get API documentation"
+      ],
+      "examples": [
+        "WebFetch('https://docs.python.org/3/', 'Extract the main topics covered')",
+        "WebFetch('https://api.example.com/docs', 'List all available endpoints')"
+      ]
+    },
+    {
+      "name": "WebSearch",
+      "purpose": "Search the web for information",
+      "patterns": [
+        "Returns relevant search results",
+        "Includes snippets and URLs",
+        "Use for current information beyond knowledge cutoff",
+        "Find documentation and tutorials"
+      ],
+      "use_cases": [
+        "Find current documentation",
+        "Search for solutions to problems",
+        "Get latest library versions",
+        "Research best practices"
+      ]
+    }
+  ],
+  
+  "workflow_patterns": [
+    {
+      "name": "research_topic",
+      "steps": [
+        "WebSearch for topic overview",
+        "WebFetch key results for details",
+        "Synthesize findings",
+        "Provide summary with sources"
+      ]
+    },
+    {
+      "name": "find_documentation",
+      "steps": [
+        "WebSearch for library/framework docs",
+        "WebFetch official documentation",
+        "Extract relevant sections",
+        "Apply to current task"
+      ]
+    },
+    {
+      "name": "debug_with_search",
+      "steps": [
+        "Search for error message",
+        "Fetch Stack Overflow or similar",
+        "Extract solutions",
+        "Apply relevant fix"
+      ]
+    }
+  ],
+  
+  "best_practices": [
+    "Use WebSearch for discovery, WebFetch for details",
+    "Always cite sources when using web information",
+    "Verify critical information from multiple sources",
+    "Use specific prompts with WebFetch for focused extraction"
+  ],
+  
+  "activation_triggers": [
+    "search the web",
+    "fetch documentation",
+    "find current information",
+    "research topic",
+    "look up API docs"
+  ]
+}

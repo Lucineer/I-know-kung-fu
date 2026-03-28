@@ -1,0 +1,533 @@
+{
+  "agent_type": "claude-code",
+  "version": "2.1.85",
+  "extraction_date": "2025-03-27",
+  "source_repository": "https://github.com/SuperInstance/claude-code-system-prompts",
+  
+  "core_capabilities": [
+    {
+      "name": "software_engineering_focus",
+      "description": "Primary focus on software engineering tasks including bug fixes, feature additions, refactoring, code explanation",
+      "prompt_pattern": "Users primarily request software engineering tasks; interpret instructions in that context"
+    },
+    {
+      "name": "autonomous_execution",
+      "description": "Can execute tasks autonomously with proper permission handling",
+      "prompt_pattern": "Tools executed in user-selected permission mode; user prompted for non-allowed tools"
+    },
+    {
+      "name": "action_care_execution",
+      "description": "Carefully considers reversibility and blast radius before taking actions",
+      "prompt_pattern": "Consider reversibility and blast radius; check with user before risky operations"
+    },
+    {
+      "name": "auto_mode",
+      "description": "Continuous autonomous execution mode with reasonable assumptions",
+      "prompt_pattern": "Execute immediately; minimize interruptions; prefer action over planning; expect course corrections"
+    },
+    {
+      "name": "learning_mode",
+      "description": "Collaborative mode that helps users learn through hands-on practice",
+      "prompt_pattern": "Request human contributions for meaningful decisions; provide educational insights"
+    },
+    {
+      "name": "minimal_mode",
+      "description": "Stripped-down mode skipping hooks, LSP, plugins, auto-memory",
+      "prompt_pattern": "Skip optional features; require explicit context via CLI flags"
+    }
+  ],
+
+  "tool_skills": [
+    {
+      "category": "file_operations",
+      "tools": [
+        {
+          "name": "Read",
+          "purpose": "Read files from local filesystem with support for images, PDFs, Jupyter notebooks",
+          "key_patterns": [
+            "Use absolute paths only",
+            "Default 2000 lines from beginning",
+            "Can read images (PNG, JPG) and PDFs",
+            "Reads Jupyter notebooks (.ipynb)"
+          ]
+        },
+        {
+          "name": "Write",
+          "purpose": "Write files to local filesystem",
+          "key_patterns": [
+            "Overwrites existing files",
+            "Must read first if file exists",
+            "Prefer Edit for modifications",
+            "Never create documentation unless explicitly requested"
+          ]
+        },
+        {
+          "name": "Edit",
+          "purpose": "Perform exact string replacements in files",
+          "key_patterns": [
+            "Preserve exact indentation",
+            "old_string must be unique",
+            "Use replace_all for renaming across file",
+            "Always prefer editing existing files"
+          ]
+        },
+        {
+          "name": "MultiEdit",
+          "purpose": "Multiple edits in single operation",
+          "key_patterns": [
+            "Edits applied sequentially",
+            "Atomic - all succeed or none"
+          ]
+        },
+        {
+          "name": "NotebookEdit",
+          "purpose": "Edit Jupyter notebook cells"
+        }
+      ]
+    },
+    {
+      "category": "search_operations",
+      "tools": [
+        {
+          "name": "Glob",
+          "purpose": "Fast file pattern matching",
+          "key_patterns": [
+            "Use instead of find or ls",
+            "Supports glob patterns like **/*.js",
+            "Sorted by modification time"
+          ]
+        },
+        {
+          "name": "Grep",
+          "purpose": "Content search using ripgrep",
+          "key_patterns": [
+            "Always use instead of grep/rg commands",
+            "Full regex support",
+            "Filter by glob or file type",
+            "Multiple output modes: content, files_with_matches, count"
+          ]
+        }
+      ]
+    },
+    {
+      "category": "code_execution",
+      "tools": [
+        {
+          "name": "Bash",
+          "purpose": "Execute bash commands",
+          "key_patterns": [
+            "Clear, concise description required",
+            "Quote file paths with spaces",
+            "Timeout default 120s, max 600s",
+            "Maintain working directory with absolute paths",
+            "Verify parent directory exists before creating",
+            "Avoid find/grep/cat - use dedicated tools",
+            "Semicolon or && for multiple commands"
+          ]
+        },
+        {
+          "name": "PowerShell",
+          "purpose": "Execute PowerShell commands on Windows"
+        }
+      ]
+    },
+    {
+      "category": "task_management",
+      "tools": [
+        {
+          "name": "TodoWrite",
+          "purpose": "Create and manage structured task lists",
+          "key_patterns": [
+            "Use for 3+ step tasks",
+            "Use for non-trivial complex tasks",
+            "States: pending, in_progress, completed",
+            "Only ONE in_progress at a time",
+            "Mark complete IMMEDIATELY after finishing",
+            "Remove irrelevant tasks entirely"
+          ]
+        },
+        {
+          "name": "TaskCreate",
+          "purpose": "Create tasks for remote execution"
+        },
+        {
+          "name": "CronCreate",
+          "purpose": "Enqueue one-shot or recurring cron-based jobs"
+        }
+      ]
+    },
+    {
+      "category": "web_operations",
+      "tools": [
+        {
+          "name": "WebFetch",
+          "purpose": "Fetch and process web content",
+          "key_patterns": [
+            "Takes URL and prompt",
+            "Converts HTML to markdown",
+            "15-minute cache",
+            "Auto-upgrades HTTP to HTTPS"
+          ]
+        },
+        {
+          "name": "WebSearch",
+          "purpose": "Search the web for information"
+        }
+      ]
+    },
+    {
+      "category": "agent_coordination",
+      "tools": [
+        {
+          "name": "Agent",
+          "purpose": "Launch subagents for parallel or specialized work",
+          "key_patterns": [
+            "Always include 3-5 word description",
+            "Can run in background with run_in_background",
+            "Use isolation: 'worktree' for isolated copies",
+            "Launch multiple in single message for parallelism",
+            "Fork inherits context and shares cache"
+          ]
+        },
+        {
+          "name": "TeammateTool",
+          "purpose": "Manage teams and coordinate teammates in swarm"
+        },
+        {
+          "name": "TeamDelete",
+          "purpose": "Delete teams"
+        },
+        {
+          "name": "SendMessageTool",
+          "purpose": "Send messages to agents or users"
+        }
+      ]
+    },
+    {
+      "category": "planning",
+      "tools": [
+        {
+          "name": "EnterPlanMode",
+          "purpose": "Enter planning mode to explore and design",
+          "key_patterns": [
+            "Use for non-trivial implementation tasks",
+            "Use when multiple valid approaches exist",
+            "Use for multi-file changes",
+            "Skip for simple fixes and clear requirements"
+          ]
+        },
+        {
+          "name": "ExitPlanMode",
+          "purpose": "Present plan for user approval"
+        }
+      ]
+    },
+    {
+      "category": "interaction",
+      "tools": [
+        {
+          "name": "AskUserQuestion",
+          "purpose": "Ask structured questions with predefined options"
+        },
+        {
+          "name": "Skill",
+          "purpose": "Execute skills/slash commands",
+          "key_patterns": [
+            "Blocking requirement - invoke BEFORE other response",
+            "Never mention skill without calling",
+            "Skills listed in system-reminder messages"
+          ]
+        },
+        {
+          "name": "Sleep",
+          "purpose": "Wait with early wake on user input"
+        }
+      ]
+    },
+    {
+      "category": "development_support",
+      "tools": [
+        {
+          "name": "LSP",
+          "purpose": "Language Server Protocol operations"
+        },
+        {
+          "name": "Computer",
+          "purpose": "Chrome browser automation tool"
+        },
+        {
+          "name": "EnterWorktree",
+          "purpose": "Enter git worktree"
+        },
+        {
+          "name": "ExitWorktree",
+          "purpose": "Exit git worktree"
+        }
+      ]
+    }
+  ],
+
+  "reasoning_patterns": [
+    {
+      "name": "plan_mode_5_phase",
+      "description": "Structured 5-phase planning workflow",
+      "phases": [
+        "Phase 1: Initial Understanding - Launch explore agents, understand requirements",
+        "Phase 2: Design - Launch plan agents for implementation design",
+        "Phase 3: Review - Review plans, ask clarifying questions",
+        "Phase 4: Refine - Iterative refinement based on feedback",
+        "Phase 5: Exit - Call ExitPlanMode for user approval"
+      ]
+    },
+    {
+      "name": "blocked_approach",
+      "description": "When blocked, consider alternatives instead of brute-forcing",
+      "prompt_pattern": "If approach blocked, consider alternatives or use AskUserQuestion to align"
+    },
+    {
+      "name": "iterative_refinement",
+      "description": "Improve through iterations with stopping criteria",
+      "prompt_pattern": "Max iterations with quality threshold and no-improvement stopping"
+    },
+    {
+      "name": "task_decomposition",
+      "description": "Break complex tasks into manageable steps",
+      "prompt_pattern": "Create specific, actionable items; use clear descriptive names"
+    },
+    {
+      "name": "parallel_execution",
+      "description": "Launch multiple independent operations in parallel",
+      "prompt_pattern": "Single message with multiple tool calls for parallel work"
+    },
+    {
+      "name": "conditional_branching",
+      "description": "Route processing based on conditions",
+      "prompt_pattern": "Evaluate conditions and branch to appropriate handler"
+    },
+    {
+      "name": "verification_adversarial",
+      "description": "Adversarial testing mindset for verification",
+      "prompt_pattern": "Try to break it; don't confirm - try to find the last 20%"
+    }
+  ],
+
+  "navigation_skills": [
+    {
+      "name": "explore_agent",
+      "type": "subagent",
+      "description": "Fast file search specialist for codebase exploration",
+      "model": "haiku",
+      "capabilities": [
+        "Rapid file finding with glob patterns",
+        "Powerful regex search",
+        "Read-only mode - no modifications",
+        "Parallel tool calls for efficiency"
+      ],
+      "thoroughness_levels": ["quick", "medium", "very thorough"]
+    },
+    {
+      "name": "plan_agent",
+      "type": "subagent",
+      "description": "Software architect for designing implementation plans",
+      "capabilities": [
+        "Read-only exploration",
+        "Design implementation approaches",
+        "Consider trade-offs",
+        "Identify critical files"
+      ]
+    },
+    {
+      "name": "general_purpose_agent",
+      "type": "subagent",
+      "description": "General-purpose agent for complex multi-step tasks",
+      "capabilities": [
+        "Search across large codebases",
+        "Analyze multiple files",
+        "Investigate complex questions",
+        "Perform multi-step research"
+      ]
+    },
+    {
+      "name": "codebase_orientation",
+      "description": "Quickly understand codebase structure and patterns",
+      "patterns": [
+        "Check CLAUDE.md for project guidance",
+        "Review README.md for key information",
+        "Explore package.json/Makefile for commands",
+        "Identify key architectural patterns"
+      ]
+    }
+  ],
+
+  "error_handling": [
+    {
+      "name": "permission_denied",
+      "description": "Handle tool execution denial gracefully",
+      "pattern": "Do not re-attempt exact same call; think about why denied and adjust"
+    },
+    {
+      "name": "validation_failure",
+      "description": "Handle validation errors",
+      "pattern": "Reject with clear message about what failed"
+    },
+    {
+      "name": "timeout_handling",
+      "description": "Handle operation timeouts",
+      "pattern": "Retry with exponential backoff, max 3 retries"
+    },
+    {
+      "name": "external_api_error",
+      "description": "Handle external API failures",
+      "pattern": "Fallback to cached response or alternative"
+    },
+    {
+      "name": "unknown_error",
+      "description": "Handle unknown errors",
+      "pattern": "Log and escalate; ask user for guidance"
+    },
+    {
+      "name": "file_not_found",
+      "description": "Handle missing files",
+      "pattern": "System reminder shows file doesn't exist; graceful error returned"
+    },
+    {
+      "name": "hook_errors",
+      "description": "Handle hook failures",
+      "patterns": [
+        "Blocking error from hook command",
+        "Hook stopped continuation",
+        "Hook success notification"
+      ]
+    }
+  ],
+
+  "subagent_types": [
+    {
+      "name": "Explore",
+      "description": "Fast exploration and search",
+      "model": "haiku",
+      "disallowed_tools": ["Agent", "ExitPlanMode", "Edit", "Write", "NotebookEdit"]
+    },
+    {
+      "name": "Plan",
+      "description": "Implementation planning and architecture",
+      "model": "inherit",
+      "disallowed_tools": ["Agent", "ExitPlanMode", "Edit", "Write", "NotebookEdit"]
+    },
+    {
+      "name": "code-reviewer",
+      "description": "Code review specialist"
+    },
+    {
+      "name": "test-runner",
+      "description": "Test execution specialist"
+    },
+    {
+      "name": "verification-specialist",
+      "description": "Adversarial verification of implementations",
+      "capabilities": [
+        "Try to break implementations",
+        "Run builds, tests, linters",
+        "Adversarial probes",
+        "Issue PASS/FAIL/PARTIAL verdict"
+      ]
+    }
+  ],
+
+  "slash_commands_skills": [
+    {
+      "name": "/batch",
+      "description": "Orchestrate large parallelizable changes across codebase"
+    },
+    {
+      "name": "/review-pr",
+      "description": "Review GitHub pull requests"
+    },
+    {
+      "name": "/pr-comments",
+      "description": "Fetch and display GitHub PR comments"
+    },
+    {
+      "name": "/schedule",
+      "description": "Schedule remote Claude Code agents on cron triggers"
+    },
+    {
+      "name": "/security-review",
+      "description": "Comprehensive security review of code changes"
+    },
+    {
+      "name": "/debug",
+      "description": "Debug issues in current session"
+    },
+    {
+      "name": "/stuck",
+      "description": "Help when stuck on a problem"
+    },
+    {
+      "name": "/loop",
+      "description": "Loop-related functionality"
+    },
+    {
+      "name": "/verify",
+      "description": "Verify code changes by running app and observing behavior"
+    }
+  ],
+
+  "memory_management": [
+    {
+      "name": "session_memory",
+      "description": "Context within a session",
+      "pattern": "Sliding window with optional summarization"
+    },
+    {
+      "name": "agent_memory",
+      "description": "Cross-conversation knowledge building",
+      "pattern": "Include domain-specific memory update instructions"
+    },
+    {
+      "name": "nested_memory",
+      "description": "Nested memory file contents"
+    },
+    {
+      "name": "team_memory",
+      "description": "Shared team memory files"
+    },
+    {
+      "name": "dream_memory_consolidation",
+      "description": "Multi-phase memory consolidation pass",
+      "phases": [
+        "Orient on existing memories",
+        "Gather recent signal from logs",
+        "Merge updates into topic files",
+        "Prune index"
+      ]
+    }
+  ],
+
+  "system_prompt_essence": "Claude Code is an interactive CLI tool that helps users with software engineering tasks. It operates with careful consideration of action reversibility and blast radius, preferring to edit existing files over creating new ones. It uses a structured approach to task management with TodoWrite for complex tasks, parallel execution for independent operations, and a 5-phase planning mode for non-trivial implementations. It can delegate to specialized subagents (Explore, Plan, verification-specialist) for focused work, and maintains memory across conversations for learning. It prioritizes software engineering tasks, avoids unnecessary additions or premature abstractions, and handles blocked approaches by considering alternatives rather than brute-forcing. It uses dedicated tools (Glob, Grep, Read, Edit, Write) instead of bash equivalents, and verifies implementations through adversarial testing rather than just confirming they work.",
+
+  "best_practices": [
+    "Always read before modifying",
+    "Prefer Edit over Write for existing files",
+    "Use dedicated search tools (Glob, Grep) instead of bash equivalents",
+    "Use TodoWrite for 3+ step tasks",
+    "Mark tasks in_progress before starting, completed immediately after",
+    "Consider EnterPlanMode for non-trivial implementations",
+    "Launch parallel agents in single message for parallelism",
+    "Verify implementations adversarially, not just confirm they work",
+    "Consider reversibility before taking risky actions",
+    "Maintain working directory with absolute paths",
+    "Quote file paths containing spaces",
+    "Never proactively create documentation files",
+    "Avoid premature abstractions",
+    "No unnecessary error handling for impossible scenarios",
+    "Delete unused code completely, no compatibility hacks"
+  ],
+
+  "output_patterns": {
+    "concise_reporting": "Lead with answers over reasoning; limit to essential information",
+    "code_references": "Include file_path:line_number when referencing code",
+    "verification_report": "Structured format with Claim, Method, Steps, Verdict",
+    "subagent_delegation": "Include 3-5 word description; trust results; clearly state if code writing or research"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "cartridge_id": "code-search",
+  "version": "1.0.0",
+  "name": "Code Search & Navigation",
+  "description": "Fast file finding and content search using ripgrep",
+  "load_priority": 10,
+  
+  "tools": [
+    {
+      "name": "Glob",
+      "purpose": "Fast file pattern matching across codebase",
+      "syntax": "Glob(pattern: str, path?: str)",
+      "patterns": [
+        "Use instead of find or ls commands",
+        "Supports glob patterns like **/*.js, src/**/*.ts",
+        "Results sorted by modification time",
+        "Use for file discovery before reading"
+      ],
+      "examples": [
+        "Glob('**/*.py') - all Python files",
+        "Glob('src/components/**/*.tsx') - React components",
+        "Glob('*.md') - markdown files in current dir"
+      ]
+    },
+    {
+      "name": "Grep",
+      "purpose": "Content search using ripgrep regex engine",
+      "syntax": "Grep(pattern: str, path?: str, output_mode?: 'content'|'files_with_matches'|'count', ...)",
+      "patterns": [
+        "Always use instead of grep/rg bash commands",
+        "Full regex syntax support",
+        "Filter by glob pattern or file type",
+        "Multiple output modes",
+        "Use -n for line numbers in content mode",
+        "Use -i for case insensitive"
+      ],
+      "output_modes": [
+        "files_with_matches - default, just file paths",
+        "content - shows matching lines with context",
+        "count - number of matches per file"
+      ],
+      "flags": {
+        "-n": "Show line numbers",
+        "-i": "Case insensitive",
+        "-C": "Context lines before and after",
+        "-A": "Lines after match",
+        "-B": "Lines before match",
+        "--head_limit": "Limit number of results",
+        "--multiline": "Multi-line regex mode"
+      },
+      "examples": [
+        "Grep('function\\\\s+\\\\w+', output_mode='content', -n=true)",
+        "Grep('TODO|FIXME', glob='*.js')",
+        "Grep('class.*implements', file_type='java')"
+      ]
+    }
+  ],
+  
+  "workflow_patterns": [
+    {
+      "name": "find_definition",
+      "steps": [
+        "Grep for definition pattern",
+        "Use content mode with line numbers",
+        "Read file at found location"
+      ]
+    },
+    {
+      "name": "explore_codebase",
+      "steps": [
+        "Glob for file patterns of interest",
+        "Grep for key terms",
+        "Read most relevant files"
+      ]
+    },
+    {
+      "name": "find_usages",
+      "steps": [
+        "Grep for symbol name",
+        "Filter to relevant file types",
+        "Review each usage in context"
+      ]
+    }
+  ],
+  
+  "best_practices": [
+    "NEVER use bash grep/rg/find - use Glob and Grep tools",
+    "Start with files_with_matches mode, then content",
+    "Use glob patterns to narrow search scope",
+    "Combine Glob + Grep for efficient exploration"
+  ],
+  
+  "anti_patterns": [
+    "Never run 'grep' or 'rg' in Bash",
+    "Never use 'find' command - use Glob",
+    "Never use 'cat' to search - use Grep"
+  ],
+  
+  "activation_triggers": [
+    "find files",
+    "search code",
+    "locate definition",
+    "find usages",
+    "explore codebase"
+  ]
+}

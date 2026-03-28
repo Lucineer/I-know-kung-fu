@@ -1,0 +1,137 @@
+{
+  "cartridge_id": "error-recovery",
+  "version": "1.0.0",
+  "name": "Error Handling & Recovery",
+  "description": "Graceful error handling and recovery patterns",
+  "load_priority": 8,
+  
+  "error_types": [
+    {
+      "name": "permission_denied",
+      "description": "Tool execution denied by user or system",
+      "pattern": "Do not re-attempt exact same call",
+      "recovery": [
+        "Think about why denied",
+        "Adjust approach or parameters",
+        "Ask user for guidance if unclear",
+        "Consider alternative tools"
+      ]
+    },
+    {
+      "name": "validation_failure",
+      "description": "Input validation failed",
+      "pattern": "Clear message about what failed",
+      "recovery": [
+        "Review validation requirements",
+        "Fix input parameters",
+        "Retry with valid input"
+      ]
+    },
+    {
+      "name": "timeout",
+      "description": "Operation exceeded time limit",
+      "pattern": "Default 120s, max 600s",
+      "recovery": [
+        "Increase timeout if appropriate",
+        "Break into smaller operations",
+        "Check for hanging processes"
+      ]
+    },
+    {
+      "name": "external_api_error",
+      "description": "External service failure",
+      "recovery": [
+        "Fallback to cached response if available",
+        "Try alternative service",
+        "Report degradation gracefully"
+      ]
+    },
+    {
+      "name": "file_not_found",
+      "description": "Requested file doesn't exist",
+      "pattern": "System reminder shows file doesn't exist",
+      "recovery": [
+        "Verify path is correct",
+        "Check for typos",
+        "Create file if appropriate",
+        "Search for similar files"
+      ]
+    },
+    {
+      "name": "edit_conflict",
+      "description": "old_string not found in file",
+      "recovery": [
+        "Re-read file to see current content",
+        "Find correct unique string",
+        "Adjust old_string to match exactly",
+        "Preserve exact whitespace"
+      ]
+    },
+    {
+      "name": "hook_blocking",
+      "description": "Hook command blocked operation",
+      "types": [
+        "Blocking error from hook command",
+        "Hook stopped continuation",
+        "Hook success with modifications"
+      ],
+      "recovery": [
+        "Review hook error message",
+        "Adjust to meet hook requirements",
+        "Ask user about hook configuration"
+      ]
+    },
+    {
+      "name": "unknown_error",
+      "description": "Unexpected error occurred",
+      "recovery": [
+        "Log error details",
+        "Escalate to user",
+        "Ask for guidance",
+        "Consider alternative approaches"
+      ]
+    }
+  ],
+  
+  "recovery_strategies": {
+    "retry": {
+      "when": "Transient failures, network issues",
+      "pattern": "Exponential backoff, max 3 retries"
+    },
+    "fallback": {
+      "when": "Primary method fails",
+      "pattern": "Use alternative tool or cached data"
+    },
+    "escalate": {
+      "when": "Cannot resolve independently",
+      "pattern": "Ask user with clear context"
+    },
+    "abort": {
+      "when": "Task impossible or unsafe",
+      "pattern": "Report clearly what failed and why"
+    }
+  },
+  
+  "best_practices": [
+    "Don't re-attempt exact same failing operation",
+    "Think about root cause before retrying",
+    "Provide clear error context to user",
+    "Consider alternatives before escalating",
+    "Handle errors gracefully, not noisily"
+  ],
+  
+  "anti_patterns": [
+    "Never infinite retry loops",
+    "Never hide error details",
+    "Never continue after critical failure",
+    "Never silently ignore errors"
+  ],
+  
+  "activation_triggers": [
+    "operation failed",
+    "permission denied",
+    "file not found",
+    "timeout exceeded",
+    "validation error"
+  ]
+}

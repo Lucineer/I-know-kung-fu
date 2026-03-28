@@ -1,0 +1,105 @@
+{
+  "cartridge_id": "task-workflow",
+  "version": "1.0.0",
+  "name": "Task Management & Todo Tracking",
+  "description": "Structured task list management for complex workflows",
+  "load_priority": 9,
+  
+  "tools": [
+    {
+      "name": "TodoWrite",
+      "purpose": "Create and manage structured task lists",
+      "syntax": "TodoWrite(todos: Array<{id, content, status, priority}>)",
+      "states": {
+        "pending": "Task not yet started",
+        "in_progress": "Currently working on - ONLY ONE at a time",
+        "completed": "Task finished successfully"
+      },
+      "priorities": ["high", "medium", "low"],
+      "patterns": [
+        "Use for 3+ step tasks",
+        "Use for non-trivial complex tasks",
+        "Create specific, actionable items",
+        "Use clear descriptive task names",
+        "Mark in_progress BEFORE starting",
+        "Mark completed IMMEDIATELY after finishing",
+        "Remove irrelevant tasks entirely",
+        "Only ONE task in_progress at a time"
+      ]
+    },
+    {
+      "name": "TaskCreate",
+      "purpose": "Create tasks for remote execution",
+      "use_cases": [
+        "Background processing",
+        "Remote agent execution",
+        "Asynchronous task queues"
+      ]
+    },
+    {
+      "name": "CronCreate",
+      "purpose": "Schedule one-shot or recurring jobs",
+      "use_cases": [
+        "Scheduled maintenance",
+        "Periodic checks",
+        "Delayed execution"
+      ]
+    }
+  ],
+  
+  "workflow_patterns": [
+    {
+      "name": "complex_task_workflow",
+      "steps": [
+        "Break task into specific actionable items",
+        "Create TodoWrite with all items pending",
+        "Mark first item in_progress",
+        "Complete items sequentially",
+        "Mark each completed immediately",
+        "Add discovered tasks as needed",
+        "Remove irrelevant tasks"
+      ]
+    },
+    {
+      "name": "parallel_task_workflow",
+      "steps": [
+        "Identify independent tasks",
+        "Create all as pending",
+        "Launch parallel agents for each",
+        "Track completion",
+        "Aggregate results"
+      ]
+    }
+  ],
+  
+  "task_breakdown_heuristics": [
+    "Each task should be completable in one 'session'",
+    "Tasks should have clear completion criteria",
+    "Break down ambiguous tasks into specific steps",
+    "Group related tasks under parent tasks",
+    "Order tasks by dependencies"
+  ],
+  
+  "best_practices": [
+    "Create TODO list before starting complex work",
+    "Update status in real-time",
+    "Capture discovered work as new tasks",
+    "Remove tasks that become irrelevant",
+    "One in_progress task at a time",
+    "Clear descriptive task names"
+  ],
+  
+  "anti_patterns": [
+    "Never batch task completion updates",
+    "Never have multiple in_progress tasks",
+    "Never keep irrelevant tasks in list",
+    "Never skip marking tasks complete"
+  ],
+  
+  "activation_triggers": [
+    "complex multi-step task",
+    "3 or more steps required",
+    "user provides list of tasks",
+    "discovering follow-up tasks"
+  ]
+}
