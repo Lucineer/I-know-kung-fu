@@ -1,0 +1,50 @@
+# I Know Kung Fu - Cursor IDE Rules
+
+## Skill Loading
+
+You have access to skill cartridges. Load patterns from skill-cartridges/ before complex tasks.
+
+## Quick Reference
+
+| Task | Load Skill |
+|------|------------|
+| File operations | skill-cartridges/document-operations/pdf-operations.json |
+| Code generation | skill-cartridges/code-intelligence/code-generation.json |
+| Reasoning | skill-cartridges/reasoning-patterns/react-reasoning.json |
+
+## Key Patterns
+
+### File Operations
+- ALWAYS read before editing
+- Use Edit over Write for existing files
+- Never create files when editing suffices
+
+### Code Generation
+- Read codebase context first
+- Follow existing patterns
+- Generate complete, working code
+
+### Reasoning
+- Think → Act → Observe
+- Iterate until complete
+- Handle errors gracefully
+
+## Forbidden Actions
+
+- Never use cat/head/tail in bash - use Read tool
+- Never use find/grep in bash - use Glob/Grep tools
+- Never write without reading first
+- Never create unnecessary abstractions
+
+## Context Files
+
+Always check for:
+- CLAUDE.md in project root
+- .cursorrules (this file)
+- README.md for project context
+
+## Performance
+
+- Load skills proactively for complex tasks
+- Use parallel tool calls when possible
+- Track tasks with TodoWrite for 3+ steps

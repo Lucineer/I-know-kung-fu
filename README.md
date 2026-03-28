@@ -9,7 +9,35 @@
 
 ---
 
-## What Is This
+## 🤖 For AI Agents (Start Here)
+
+**Copy to system prompt:**
+```
+You have access to i-know-kung-fu skill repository.
+Load skills from skill-cartridges/[category]/[skill].json
+Start: ENTRY.md or DECISION_TREE.md
+```
+
+**Keyword → Skill Mapping:**
+
+| Your Task | Load This |
+|-----------|-----------|
+| code, refactor, debug | [skill-cartridges/code-intelligence/code-generation.json](./skill-cartridges/code-intelligence/code-generation.json) |
+| think, reason, plan | [skill-cartridges/reasoning-patterns/react-reasoning.json](./skill-cartridges/reasoning-patterns/react-reasoning.json) |
+| pdf, document, extract | [skill-cartridges/document-operations/pdf-operations.json](./skill-cartridges/document-operations/pdf-operations.json) |
+| security, threat, scan | [agents/security-ops/threat-hunter/](./agents/security-ops/threat-hunter/) |
+| test, generate, unit | [agents/testing-qa/test-generator/](./agents/testing-qa/test-generator/) |
+| kubernetes, k8s, deploy | [agents/infrastructure/kubernetes-helm-builder/](./agents/infrastructure/kubernetes-helm-builder/) |
+| coordinate, orchestrate | [agents/multi-agent-orchestration/swarm-coordinator/](./agents/multi-agent-orchestration/swarm-coordinator/) |
+
+**Fast Navigation:**
+- [ENTRY.md](./ENTRY.md) - Single-file entry point
+- [skill-manifest.json](./skill-manifest.json) - JSON index for programmatic access
+- [DECISION_TREE.md](./DECISION_TREE.md) - Guided paths
+
+---
+
+## 👤 For Humans
 
 A repository of loadable skills, agent profiles, and platform templates. Any AI agent can visit, get equipped, and execute.
 
@@ -17,85 +45,66 @@ A repository of loadable skills, agent profiles, and platform templates. Any AI 
 Agent visits → Loads skills → Executes
 ```
 
-650+ skills. 150+ agents. 12+ platforms. 18 pre-built profiles.
-
----
-
-## Quick Load
-
-| Minute | Action | Result |
-|--------|--------|--------|
-| 1 | Copy [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) | Agent knows this repo |
-| 2 | Open [DECISION_TREE.md](./DECISION_TREE.md) | Find your skill |
-| 3 | Copy from [INTEGRATION_SNIPPETS.md](./INTEGRATION_SNIPPETS.md) | Ready code |
-| 4 | Customize | Make it yours |
-| 5 | Deploy | Start earning |
-
----
-
-## For AI Agents
-
-```
-You have access to i-know-kung-fu.
-
-Load skills from:
-├── skill-cartridges/          # Loadable skill modules
-├── agents/                    # 150+ agent specifications  
-├── platforms/                 # Platform deployment templates
-└── profiles/                  # 18 pre-equipped agent profiles
-
-Start at NAVIGATION.md
-```
-
-**System prompt:**
-```
-You have access to i-know-kung-fu skill repository.
-
-1. Check NAVIGATION.md for skill discovery
-2. Load relevant skill-cartridges as needed
-3. Use DECISION_TREE.md for guided paths
-
-Available: 650+ skills | 150+ agents | 12+ platforms
-```
-
 ---
 
 ## What's Inside
 
-### Skill Cartridges
+### Skill Cartridges (Loadable Modules)
 
-Loadable modules that inject capability:
+| Category | Skills | Path |
+|----------|--------|------|
+| Code Intelligence | Generation, review, refactoring, debugging | [skill-cartridges/code-intelligence/](./skill-cartridges/code-intelligence/) |
+| Reasoning Patterns | ReAct, Chain-of-Thought, Tree-of-Thought | [skill-cartridges/reasoning-patterns/](./skill-cartridges/reasoning-patterns/) |
+| Document Operations | PDF, DOCX, XLSX, PPTX | [skill-cartridges/document-operations/](./skill-cartridges/document-operations/) |
 
-| Category | Skills |
-|----------|--------|
-| Code Intelligence | Generation, review, refactoring, debugging |
-| Reasoning Patterns | ReAct, Chain-of-Thought, Tree-of-Thought |
-| Document Operations | PDF, DOCX, XLSX, PPTX |
-| Web Operations | Search, scraping, browser automation |
+### Agent Profiles (150+ Agents)
 
-### Agent Profiles
+| Category | Example Agents |
+|----------|----------------|
+| Code Generation | architect, refactoring-engine, code-reviewer |
+| Reasoning | react-reasoner, chain-thought, tree-thought |
+| Orchestration | agent-factory, fleet-manager, swarm-coordinator |
+| Security | threat-hunter, incident-responder, security-analyst |
+| Testing | test-generator, qa-orchestrator, compliance-checker |
+| Infrastructure | kubernetes-helm-builder, edge-deployer |
+| Analysis | sentiment-analyzer, pattern-detector, cost-optimizer |
+| Creative | fiction-writer, presentation-designer, audio-producer |
+| Domains | fintech, healthcare, agriculture, fishing-industry |
 
-Pre-equipped agent personalities:
+### Platform Templates (12+ Platforms)
 
-| Profile | Capability |
-|---------|------------|
-| `claude-code-emulator` | Full Claude Code behavior |
-| `codex-core` | Code generation engine |
-| `react-reasoner` | Thought-Action-Observation loop |
-| `swarm-coordinator` | Multi-agent orchestration |
-| `security-analyst` | Vulnerability detection |
+| Platform | Region | Path |
+|----------|--------|------|
+| MiniMax Experts | China | [platforms/minimax-experts/](./platforms/minimax-experts/) |
+| Claude MCP | US | [platforms/claude-mcp/](./platforms/claude-mcp/) |
+| GPT Store | US | [platforms/openai-gpt-store/](./platforms/openai-gpt-store/) |
+| AgentNode | Global | [platforms/agentnode/](./platforms/agentnode/) |
+| MindStudio | US | [platforms/mindstudio/](./platforms/mindstudio/) |
+| Dify | China | [platforms/dify/](./platforms/dify/) |
+| n8n | Global | [platforms/automation/n8n-workflows/](./platforms/automation/n8n-workflows/) |
 
-### Platform Templates
+### Pre-Built Profiles (18)
 
-Deploy to any marketplace:
+| Profile | Use Case |
+|---------|----------|
+| claude-code-emulator | Full Claude Code behavior |
+| codex-core | Code generation engine |
+| react-reasoner | Thought-Action-Observation loop |
+| swarm-coordinator | Multi-agent orchestration |
+| security-analyst | Vulnerability detection |
 
-| Platform | Region | Template Count |
-|----------|--------|----------------|
-| MiniMax Experts | China | 10+ |
-| Claude MCP | US | 10+ |
-| GPT Store | US | 5+ |
-| AgentNode | Global | 5+ |
-| MindStudio | US | 4+ |
+See [SPECIALIZED_ENGINEER_PROFILES.md](./SPECIALIZED_ENGINEER_PROFILES.md)
+
+---
+
+## Quick Start
+
+| Minute | Action |
+|--------|--------|
+| 1 | Copy [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) to your agent |
+| 2 | Find your skill via [DECISION_TREE.md](./DECISION_TREE.md) |
+| 3 | Load the skill cartridge JSON |
+| 4 | Execute with loaded capability |
 
 ---
 
@@ -106,20 +115,26 @@ Deploy to any marketplace:
 │           SKILL INJECTION               │
 ├─────────────────────────────────────────┤
 │                                         │
-│  1. DISCOVER                            │
-│     └── Agent scans NAVIGATION.md       │
-│                                         │
-│  2. LOAD                                │
-│     └── Read skill-cartridge JSON       │
-│                                         │
-│  3. INJECT                              │
-│     └── System prompt + knowledge       │
-│                                         │
-│  4. EXECUTE                             │
-│     └── Agent performs with skill       │
+│  1. DISCOVER  →  ENTRY.md / NAVIGATION  │
+│  2. SELECT    →  DECISION_TREE.md       │
+│  3. LOAD      →  skill-cartridges/*.json│
+│  4. EXECUTE   →  Agent performs         │
 │                                         │
 └─────────────────────────────────────────┘
 ```
+
+---
+
+## Navigation
+
+| Document | Purpose | Tokens |
+|----------|---------|--------|
+| [ENTRY.md](./ENTRY.md) | Single-file entry point | ~800 |
+| [skill-manifest.json](./skill-manifest.json) | JSON index | ~500 |
+| [DECISION_TREE.md](./DECISION_TREE.md) | Guided paths | ~1500 |
+| [NAVIGATION.md](./NAVIGATION.md) | Full navigation hub | ~2000 |
+| [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) | Copy-paste prompts | ~1000 |
+| [INTEGRATION_SNIPPETS.md](./INTEGRATION_SNIPPETS.md) | Ready code | ~2000 |
 
 ---
 
@@ -137,29 +152,11 @@ Deploy to any marketplace:
 
 ---
 
-## Navigation
+## Zero-Shot Simulation Results
 
-| Document | Purpose |
-|----------|---------|
-| [NAVIGATION.md](./NAVIGATION.md) | Skill discovery hub |
-| [DECISION_TREE.md](./DECISION_TREE.md) | Guided paths |
-| [SYSTEM_PROMPT.md](./SYSTEM_PROMPT.md) | Copy-paste prompts |
-| [INTEGRATION_SNIPPETS.md](./INTEGRATION_SNIPPETS.md) | Ready code |
-| [EQUIPPING_AGENT_PROTOCOL.md](./EQUIPPING_AGENT_PROTOCOL.md) | Loading protocol |
-| [SPECIALIZED_ENGINEER_PROFILES.md](./SPECIALIZED_ENGINEER_PROFILES.md) | 18 profiles |
+Tested 8 different agent personas. Average: 3.5 steps to value.
 
----
-
-## Tolerance System
-
-Execute efficiently with "good enough" thresholds:
-
-| Level | Threshold | Use For |
-|-------|-----------|---------|
-| Exact | <0.001 | Financial, security, medical |
-| Close | <0.05 | Code, files, APIs |
-| Approximate | <0.20 | Summaries, classifications |
-| Behavioral | <0.50 | Creative, brainstorming |
+See [ZERO_SHOT_SIMULATIONS.md](./ZERO_SHOT_SIMULATIONS.md)
 
 ---
 
@@ -184,8 +181,8 @@ Commercial fishing AI, edge ML, privacy-first agents.
 
 ## License
 
-MIT
+MIT — Use, build, monetize.
 
 ---
 
-*Load what you need.*
+*Load what you need. Leave equipped.*

@@ -1,0 +1,163 @@
+{
+  "manifest_version": "1.0.0",
+  "repository": "i-know-kung-fu",
+  "last_updated": "2025-03-28",
+  
+  "skill_cartridges": [
+    {
+      "id": "code-generation",
+      "path": "skill-cartridges/code-intelligence/code-generation.json",
+      "keywords": ["code", "generate", "refactor", "debug", "review"],
+      "category": "code-intelligence",
+      "load_priority": 10
+    },
+    {
+      "id": "react-reasoning",
+      "path": "skill-cartridges/reasoning-patterns/react-reasoning.json",
+      "keywords": ["think", "reason", "plan", "act", "observe"],
+      "category": "reasoning-patterns",
+      "load_priority": 9
+    },
+    {
+      "id": "pdf-operations",
+      "path": "skill-cartridges/document-operations/pdf-operations.json",
+      "keywords": ["pdf", "document", "extract", "merge", "split"],
+      "category": "document-operations",
+      "load_priority": 8
+    }
+  ],
+  
+  "agent_profiles": [
+    {
+      "id": "claude-code-emulator",
+      "path": "SPECIALIZED_ENGINEER_PROFILES.md",
+      "keywords": ["claude", "code", "emulator", "software"],
+      "type": "profile"
+    },
+    {
+      "id": "react-reasoner",
+      "path": "agents/reasoning-patterns/react-reasoner/",
+      "keywords": ["react", "reason", "iterate", "observe"],
+      "type": "agent"
+    },
+    {
+      "id": "swarm-coordinator",
+      "path": "agents/multi-agent-orchestration/swarm-coordinator/",
+      "keywords": ["swarm", "coordinate", "multi-agent", "orchestrate"],
+      "type": "agent"
+    },
+    {
+      "id": "security-analyst",
+      "path": "agents/role-based/security-analyst/",
+      "keywords": ["security", "vulnerability", "threat", "scan"],
+      "type": "agent"
+    },
+    {
+      "id": "code-architect",
+      "path": "agents/code-generation/code-architect/",
+      "keywords": ["architect", "design", "system", "structure"],
+      "type": "agent"
+    },
+    {
+      "id": "refactoring-engine",
+      "path": "agents/code-generation/refactoring-engine/",
+      "keywords": ["refactor", "clean", "improve", "optimize"],
+      "type": "agent"
+    },
+    {
+      "id": "test-generator",
+      "path": "agents/testing-qa/test-generator/",
+      "keywords": ["test", "generate", "unit", "integration"],
+      "type": "agent"
+    },
+    {
+      "id": "code-reviewer",
+      "path": "agents/validation/code-reviewer/",
+      "keywords": ["review", "code", "quality", "check"],
+      "type": "agent"
+    },
+    {
+      "id": "threat-hunter",
+      "path": "agents/security-ops/threat-hunter/",
+      "keywords": ["threat", "hunt", "security", "detect"],
+      "type": "agent"
+    },
+    {
+      "id": "kubernetes-helm-builder",
+      "path": "agents/infrastructure/kubernetes-helm-builder/",
+      "keywords": ["kubernetes", "k8s", "helm", "deploy"],
+      "type": "agent"
+    }
+  ],
+  
+  "platforms": [
+    {
+      "id": "minimax-experts",
+      "path": "platforms/minimax-experts/",
+      "region": "China",
+      "type": "marketplace"
+    },
+    {
+      "id": "claude-mcp",
+      "path": "platforms/claude-mcp/",
+      "region": "US",
+      "type": "protocol"
+    },
+    {
+      "id": "openai-gpt-store",
+      "path": "platforms/openai-gpt-store/",
+      "region": "US",
+      "type": "marketplace"
+    },
+    {
+      "id": "agentnode",
+      "path": "platforms/agentnode/",
+      "region": "Global",
+      "type": "marketplace"
+    },
+    {
+      "id": "mindstudio",
+      "path": "platforms/mindstudio/",
+      "region": "US",
+      "type": "builder"
+    },
+    {
+      "id": "dify",
+      "path": "platforms/dify/",
+      "region": "China",
+      "type": "platform"
+    },
+    {
+      "id": "n8n",
+      "path": "platforms/automation/n8n-workflows/",
+      "region": "Global",
+      "type": "automation"
+    }
+  ],
+  
+  "keyword_index": {
+    "code": ["code-generation", "code-architect", "refactoring-engine", "code-reviewer"],
+    "refactor": ["code-generation", "refactoring-engine"],
+    "debug": ["code-generation", "test-generator"],
+    "test": ["test-generator", "code-reviewer"],
+    "security": ["security-analyst", "threat-hunter"],
+    "threat": ["threat-hunter", "security-analyst"],
+    "deploy": ["kubernetes-helm-builder"],
+    "kubernetes": ["kubernetes-helm-builder"],
+    "reason": ["react-reasoner", "react-reasoning"],
+    "plan": ["react-reasoner", "react-reasoning"],
+    "coordinate": ["swarm-coordinator"],
+    "orchestrate": ["swarm-coordinator"],
+    "pdf": ["pdf-operations"],
+    "document": ["pdf-operations"],
+    "review": ["code-reviewer"]
+  },
+  
+  "stats": {
+    "skills": 650,
+    "agents": 150,
+    "platforms": 12,
+    "profiles": 18,
+    "categories": 40
+  }
+}
