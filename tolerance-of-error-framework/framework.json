@@ -1,0 +1,533 @@
+{
+  "tolerance_framework": {
+    "definition": "A system that enables approximate execution by determining if an agent's inferred reasoning produces outputs within acceptable tolerance of actual code execution, allowing selective skipping of expensive tool calls while maintaining output quality.",
+    "measurement": {
+      "methods": {
+        "exact": "Byte-level equality comparison (ε < 0.001)",
+        "structural": "Schema compliance and structural equivalence (ε < 0.05)",
+        "semantic": "Embedding-based similarity scoring (ε < 0.20)",
+        "behavioral": "Outcome category matching (ε < 0.50)"
+      },
+      "metrics": {
+        "numerical": {
+          "formula": "relative_error = |inferred - actual| / |actual|",
+          "range": "[0, ∞)",
+          "acceptable_threshold": "depends on tolerance level"
+        },
+        "text": {
+          "formula": "cosine_similarity(embed(inferred), embed(actual))",
+          "range": "[0, 1]",
+          "acceptable_threshold": {
+            "exact": 1.0,
+            "close": 0.95,
+            "approximate": 0.80,
+            "behavioral": 0.50
+          }
+        },
+        "structural": {
+          "formula": "schema_compliance * field_match_rate",
+          "range": "[0, 1]",
+          "checks": ["type_match", "required_fields", "value_ranges"]
+        },
+        "behavioral": {
+          "formula": "(action_match + target_match + outcome_match) / 3",
+          "range": "[0, 1]",
+          "dimensions": ["action_type", "target_entity", "outcome_category"]
+        }
+      }
+    },
+    "calibration": {
+      "pipeline": [
+        "Collect execution traces (input, inferred, actual, confidence)",
+        "Compute error distributions per skill/operation",
+        "Set thresholds at desired percentiles (P95 for skip, P80 for fallback)",
+        "Validate against accuracy requirements",
+        "Monitor drift and trigger recalibration"
+      ],
+      "parameters": {
+        "min_samples": 100,
+        "skip_threshold_percentile": 95,
+        "fallback_threshold_percentile": 80,
+        "retrain_interval_days": 7,
+        "drift_detection_window": 1000,
+        "confidence_interval": 0.95
+      },
+      "error_distribution": {
+        "model": "Gaussian Mixture Model",
+        "components": ["systematic_bias", "random_error", "tail_risk"],
+        "percentiles_tracked": [50, 75, 90, 95, 99]
+      }
+    }
+  },
+  "tolerance_levels": {
+    "exact": {
+      "epsilon": 0.001,
+      "description": "Near-zero tolerance for errors. Used when any deviation could cause harm or significant issues.",
+      "use_cases": [
+        "financial calculations",
+        "security-critical operations",
+        "legal document generation",
+        "medical diagnoses",
+        "data deletion",
+        "authentication"
+      ],
+      "comparison_method": "exact",
+      "skip_threshold": 1.0,
+      "fallback_policy": "never_skip",
+      "example_skills": ["finance", "legal-document-suite", "healthcare-compliance"],
+      "validation_requirements": [
+        "byte-level equality",
+        "checksum verification",
+        "cryptographic signature"
+      ]
+    },
+    "close": {
+      "epsilon": 0.05,
+      "description": "Minor variations acceptable. Used when structure must be correct but minor details can vary.",
+      "use_cases": [
+        "code generation",
+        "data transformations",
+        "API requests",
+        "file operations",
+        "schema validation"
+      ],
+      "comparison_method": "structural",
+      "skip_threshold": 0.95,
+      "fallback_policy": "execute_with_validation",
+      "example_skills": ["coding-agent", "data-transformer", "api-migrator", "xlsx", "docx"],
+      "validation_requirements": [
+        "schema compliance",
+        "required field presence",
+        "type correctness",
+        "value range checks"
+      ]
+    },
+    "approximate": {
+      "epsilon": 0.20,
+      "description": "Semantic equivalence sufficient. Used when meaning must be preserved but exact wording can vary.",
+      "use_cases": [
+        "content summarization",
+        "classification tasks",
+        "recommendations",
+        "search rankings",
+        "sentiment analysis"
+      ],
+      "comparison_method": "semantic",
+      "skip_threshold": 0.85,
+      "fallback_policy": "execute_if_low_confidence",
+      "example_skills": ["blog-writer", "market-analyst", "sentiment-analyzer", "web-search"],
+      "validation_requirements": [
+        "semantic similarity > 0.80",
+        "key entity preservation",
+        "sentiment consistency",
+        "topic alignment"
+      ]
+    },
+    "behavioral": {
+      "epsilon": 0.50,
+      "description": "Same outcome category acceptable. Used when the general outcome matters more than specifics.",
+      "use_cases": [
+        "creative writing",
+        "brainstorming",
+        "exploratory analysis",
+        "prototype generation",
+        "ideation"
+      ],
+      "comparison_method": "behavioral",
+      "skip_threshold": 0.70,
+      "fallback_policy": "execute_on_request",
+      "example_skills": ["fiction-writer", "world-builder", "storyboard-manager", "image-generation"],
+      "validation_requirements": [
+        "action type match",
+        "outcome category match",
+        "user intent satisfaction"
+      ]
+    }
+  },
+  "skill_tolerance_matrix": [
+    {
+      "skill_category": "document-processing",
+      "skills": ["pdf", "docx", "xlsx", "pptx"],
+      "default_tolerance": "close",
+      "tolerance_by_operation": {
+        "extract_text": {
+          "tolerance": "approximate",
+          "reason": "Text extraction can have minor variations"
+        },
+        "fill_form": {
+          "tolerance": "exact",
+          "reason": "Form fields must match exactly"
+        },
+        "create_document": {
+          "tolerance": "close",
+          "reason": "Structure must be correct"
+        },
+        "merge_documents": {
+          "tolerance": "close",
+          "reason": "Order and content must be preserved"
+        },
+        "convert_format": {
+          "tolerance": "close",
+          "reason": "Content preservation is critical"
+        }
+      },
+      "confidence_threshold": 0.90,
+      "fallback_policy": "execute_with_validation",
+      "special_considerations": [
+        "Legal documents require exact tolerance",
+        "Templates need close tolerance",
+        "Data extraction can use approximate"
+      ]
+    },
+    {
+      "skill_category": "web-operations",
+      "skills": ["web-search", "web-reader", "agent-browser"],
+      "default_tolerance": "approximate",
+      "tolerance_by_operation": {
+        "search": {
+          "tolerance": "approximate",
+          "reason": "Search results naturally vary"
+        },
+        "extract_content": {
+          "tolerance": "approximate",
+          "reason": "Content extraction has natural variation"
+        },
+        "click_element": {
+          "tolerance": "behavioral",
+          "reason": "Click action outcome is what matters"
+        },
+        "fill_form": {
+          "tolerance": "close",
+          "reason": "Form values must be correct"
+        },
+        "navigate": {
+          "tolerance": "behavioral",
+          "reason": "Final page state matters"
+        }
+      },
+      "confidence_threshold": 0.80,
+      "fallback_policy": "execute_with_retry",
+      "special_considerations": [
+        "Dynamic content reduces skip opportunities",
+        "Rate limiting may require fallback",
+        "Authentication steps require close tolerance"
+      ]
+    },
+    {
+      "skill_category": "financial-analysis",
+      "skills": ["finance", "stock-analysis-skill"],
+      "default_tolerance": "exact",
+      "tolerance_by_operation": {
+        "get_price": {
+          "tolerance": "exact",
+          "reason": "Prices must be accurate"
+        },
+        "calculate_metrics": {
+          "tolerance": "exact",
+          "reason": "Financial calculations require precision"
+        },
+        "generate_report": {
+          "tolerance": "close",
+          "reason": "Report structure must be correct"
+        },
+        "risk_assessment": {
+          "tolerance": "close",
+          "reason": "Risk categories must be accurate"
+        }
+      },
+      "confidence_threshold": 0.98,
+      "fallback_policy": "always_execute",
+      "special_considerations": [
+        "Never skip for transactions",
+        "Always verify with real data",
+        "Compliance requires audit trails"
+      ]
+    },
+    {
+      "skill_category": "content-generation",
+      "skills": ["blog-writer", "content-strategy", "seo-content-writer"],
+      "default_tolerance": "behavioral",
+      "tolerance_by_operation": {
+        "draft_content": {
+          "tolerance": "behavioral",
+          "reason": "Creative content varies naturally"
+        },
+        "edit_content": {
+          "tolerance": "approximate",
+          "reason": "Edits should preserve meaning"
+        },
+        "optimize_seo": {
+          "tolerance": "approximate",
+          "reason": "SEO recommendations can vary"
+        },
+        "translate": {
+          "tolerance": "approximate",
+          "reason": "Translations have valid variations"
+        }
+      },
+      "confidence_threshold": 0.70,
+      "fallback_policy": "execute_if_requested",
+      "special_considerations": [
+        "User preferences may override",
+        "Style guidelines matter",
+        "Brand voice must be preserved"
+      ]
+    },
+    {
+      "skill_category": "code-operations",
+      "skills": ["coding-agent", "code-architect", "refactoring-engine"],
+      "default_tolerance": "close",
+      "tolerance_by_operation": {
+        "read_code": {
+          "tolerance": "approximate",
+          "reason": "Understanding can be approximate"
+        },
+        "write_code": {
+          "tolerance": "close",
+          "reason": "Code must compile and run"
+        },
+        "refactor": {
+          "tolerance": "close",
+          "reason": "Functionality must be preserved"
+        },
+        "debug": {
+          "tolerance": "close",
+          "reason": "Fixes must be correct"
+        },
+        "test": {
+          "tolerance": "exact",
+          "reason": "Test assertions must be precise"
+        }
+      },
+      "confidence_threshold": 0.92,
+      "fallback_policy": "execute_and_validate",
+      "special_considerations": [
+        "Syntax errors are never acceptable",
+        "Runtime behavior must match",
+        "Security-sensitive code needs exact"
+      ]
+    },
+    {
+      "skill_category": "media-generation",
+      "skills": ["image-generation", "video-generation", "TTS", "ASR"],
+      "default_tolerance": "behavioral",
+      "tolerance_by_operation": {
+        "generate_image": {
+          "tolerance": "behavioral",
+          "reason": "Creative outputs vary by nature"
+        },
+        "transcribe_audio": {
+          "tolerance": "approximate",
+          "reason": "Transcriptions can have minor errors"
+        },
+        "synthesize_speech": {
+          "tolerance": "behavioral",
+          "reason": "Voice output varies naturally"
+        },
+        "generate_video": {
+          "tolerance": "behavioral",
+          "reason": "Video generation is inherently variable"
+        }
+      },
+      "confidence_threshold": 0.60,
+      "fallback_policy": "execute_if_confidence_low",
+      "special_considerations": [
+        "User acceptance is subjective",
+        "Style consistency matters within sessions",
+        "Quality may need iteration"
+      ]
+    },
+    {
+      "skill_category": "data-analysis",
+      "skills": ["market-analyst", "sentiment-analyzer", "pattern-detector"],
+      "default_tolerance": "approximate",
+      "tolerance_by_operation": {
+        "analyze_trends": {
+          "tolerance": "approximate",
+          "reason": "Trend interpretations can vary"
+        },
+        "detect_patterns": {
+          "tolerance": "approximate",
+          "reason": "Pattern recognition has natural variance"
+        },
+        "generate_insights": {
+          "tolerance": "behavioral",
+          "reason": "Insights are interpretive"
+        },
+        "calculate_statistics": {
+          "tolerance": "close",
+          "reason": "Statistical calculations should be accurate"
+        }
+      },
+      "confidence_threshold": 0.85,
+      "fallback_policy": "execute_with_spot_check",
+      "special_considerations": [
+        "Source data quality matters",
+        "Methodology must be documented",
+        "Outliers need special handling"
+      ]
+    }
+  ],
+  "implementation_approach": {
+    "phase_1": {
+      "name": "Foundation",
+      "duration": "2-3 weeks",
+      "tasks": [
+        "Implement ToleranceEvaluator with basic comparison methods",
+        "Create ConfidenceScorer with self-reported confidence",
+        "Build CalibrationDatabase for storing execution traces",
+        "Add tolerance configuration to skill manifests",
+        "Create base comparator classes"
+      ],
+      "deliverables": [
+        "Core evaluation engine",
+        "Database schema",
+        "Configuration format specification"
+      ]
+    },
+    "phase_2": {
+      "name": "Integration",
+      "duration": "2-3 weeks",
+      "tasks": [
+        "Integrate with skill execution pipeline",
+        "Implement fallback and retry logic",
+        "Add monitoring and metrics collection",
+        "Create calibration pipeline",
+        "Build comparison storage system"
+      ],
+      "deliverables": [
+        "Integrated execution flow",
+        "Monitoring dashboard MVP",
+        "Calibration tooling"
+      ]
+    },
+    "phase_3": {
+      "name": "Optimization",
+      "duration": "2-4 weeks",
+      "tasks": [
+        "Train confidence prediction models",
+        "Implement adaptive threshold adjustment",
+        "Add drift detection and auto-recalibration",
+        "Build monitoring dashboard",
+        "Create alerting system"
+      ],
+      "deliverables": [
+        "Trained confidence models",
+        "Adaptive calibration system",
+        "Full monitoring suite"
+      ]
+    },
+    "phase_4": {
+      "name": "Advanced Features",
+      "duration": "ongoing",
+      "tasks": [
+        "Multi-model ensemble for confidence",
+        "Explainable tolerance decisions",
+        "Transfer learning across skills",
+        "User preference learning",
+        "A/B testing framework"
+      ],
+      "deliverables": [
+        "Ensemble confidence system",
+        "Explanation interface",
+        "Transfer learning pipeline"
+      ]
+    }
+  },
+  "safety_rules": {
+    "never_skip": [
+      "financial_transaction",
+      "data_deletion",
+      "security_operation",
+      "legal_document_signing",
+      "medical_diagnosis",
+      "authentication",
+      "authorization"
+    ],
+    "require_validation": [
+      "api_key_usage",
+      "pii_handling",
+      "external_api_call",
+      "database_write",
+      "email_send"
+    ],
+    "max_consecutive_skips": 10,
+    "recalibrate_triggers": {
+      "error_rate_spike": 0.05,
+      "consecutive_failures": 3,
+      "user_complaint_rate": 0.02
+    }
+  },
+  "escalation_levels": {
+    "level_0": {
+      "name": "Normal Operation",
+      "condition": "All metrics within bounds",
+      "action": "Skip execution when confidence >= threshold"
+    },
+    "level_1": {
+      "name": "Caution",
+      "condition": "Error rate > 2% above baseline",
+      "action": "Increase confidence threshold by 5%"
+    },
+    "level_2": {
+      "name": "Warning",
+      "condition": "Error rate > 5% above baseline",
+      "action": "Reduce skip rate by 50%, trigger recalibration"
+    },
+    "level_3": {
+      "name": "Critical",
+      "condition": "Error rate > 10% above baseline",
+      "action": "Disable skip for affected skills, alert operations"
+    },
+    "level_4": {
+      "name": "Emergency",
+      "condition": "System-wide accuracy degradation",
+      "action": "Disable tolerance system globally, require manual re-enablement"
+    }
+  },
+  "metrics": {
+    "efficiency": {
+      "skip_rate": {
+        "description": "Percentage of executions skipped due to high confidence",
+        "target": "> 60% for approximate/behavioral tasks"
+      },
+      "average_latency_saved_ms": {
+        "description": "Average time saved per skip",
+        "target": "> 100ms per skip"
+      },
+      "token_savings": {
+        "description": "Average tokens saved per skip",
+        "target": "> 500 tokens per skip"
+      }
+    },
+    "accuracy": {
+      "false_skip_rate": {
+        "description": "Skips where inferred output was outside tolerance",
+        "target": "< 2%"
+      },
+      "error_rate_by_tolerance_level": {
+        "description": "Error rates per tolerance band",
+        "targets": {
+          "exact": "< 0.1%",
+          "close": "< 1%",
+          "approximate": "< 5%",
+          "behavioral": "< 10%"
+        }
+      }
+    },
+    "quality": {
+      "user_satisfaction_score": {
+        "description": "Post-execution user ratings",
+        "target": "> 4.5/5.0"
+      },
+      "task_completion_rate": {
+        "description": "Successful task completions",
+        "target": "> 98%"
+      },
+      "revision_rate": {
+        "description": "How often users request re-execution",
+        "target": "< 5%"
+      }
+    }
+  }
+}
