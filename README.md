@@ -1,59 +1,44 @@
-# i-know-kung-fu
+# i-know-kung-fu 🥋
 
-Skill injection for AI agents. Load what you need.
+You load AI skills only when you need them. Each skill is a plain JSON cartridge you insert directly into your system prompt. This is an open library of those cartridges.
 
-Agents can fail on trivial tasks not from model limits, but from missing specific capabilities. You don't need to fine-tune or rewrite your runtime—just load the required skill for the job.
+**Live URL:** [https://i-know-kung-fu.casey-digennaro.workers.dev](https://i-know-kung-fu.casey-digennaro.workers.dev)
 
-This is a shared library of standard agent behaviors packaged as plain JSON cartridges. Inject them directly into your agent's system context when needed. Fork and modify any skill without permission.
+## Why This Exists
+Many agent systems include a large default prompt. You often pay a token cost for capabilities your current task does not require. This library lets you start with a minimal prompt and load specific skills on demand.
 
-## Why this exists
+## Quick Start
+1.  **Fork this repository.** All development happens in your own fork.
+2.  Deploy to Cloudflare Workers with one click. It has zero dependencies.
+3.  Modify any JSON file in `skill-cartridges/` for your use case. No API keys or configuration is needed.
 
-Every team rebuilds the same base capabilities: error recovery, file safety rules, PDF extraction. This library provides tested, forkable implementations of these common skills to reduce duplication.
+When your agent needs a capability, copy the relevant skill's JSON into your system prompt. Start each agent interaction with a clean slate.
 
-## How it works
+## What Makes This Different
+1.  **No SDK or integration.** You use skills by copying plain text into your prompt. This works with any LLM or agent framework immediately.
+2.  **Full transparency and control.** Every skill is a readable JSON file you can audit and edit. You do not inherit hidden behaviors.
+3.  **Controlled token usage.** You only add the tokens for the specific skill you are using in a given conversation.
 
-These are auditable JSON behavior cartridges. You load them into your agent's system prompt only for relevant tasks. Start with zero skills and pay only the token cost for what you use.
+## Features
+*   Fork-first public library: every skill is a standalone, human-readable JSON file.
+*   Zero runtime overhead: no external API calls or services.
+*   Practical patterns for code, documents, error handling, search, and delegation.
+*   MIT licensed. Use for any purpose.
 
-**Copy to system prompt:**
-```
-You have access to i-know-kung-fu skill repository.
-Load skills from: skill-cartridges/[category]/[skill].json
-Navigate via: DECISION_TREE.md
-```
+## A Specific Limitation
+Each skill cartridge adds to your prompt's token count, which increases cost and may hit context limits. A complex skill can be over 1,000 tokens. You must manage this trade-off between capability and context space.
 
-## Skill reference
+## Skill Reference
+| For tasks like... | Load this skill |
+| :--- | :--- |
+| `code`, `refactor`, `debug` | [code-generation.json](./skill-cartridges/code-intelligence/code-generation.json) |
+| `pdf`, `document`, `extract` | [pdf-operations.json](./skill-cartridges/document-operations/pdf-operations.json) |
+| `error`, `fail`, `retry` | [error-recovery.json](./skill-cartridges/error-handling/error-recovery.json) |
+| `search`, `find`, `grep` | [code-search.json](./skill-cartridges/search-operations/code-search.json) |
+| `web`, `fetch`, `search online` | [web-operations.json](./skill-cartridges/web-operations/web-operations.json) |
+| `plan`, `design`, `architecture` | [planning-mode.json](./skill-cartridges/planning-patterns/planning-mode.json) |
+| `agent`, `delegate`, `parallel` | [agent-delegation.json](./skill-cartridges/subagent-patterns/agent-delegation.json) |
 
-| Task keywords | Load this skill |
-|---------------|-----------------|
-| `code`, `refactor`, `debug` | [skill-cartridges/code-intelligence/code-generation.json](./skill-cartridges/code-intelligence/code-generation.json) |
-| `reason`, `think`, `plan` | [skill-cartridges/reasoning-patterns/react-reasoning.json](./skill-cartridges/reasoning-patterns/react-reasoning.json) |
-| `pdf`, `document`, `extract` | [skill-cartridges/document-operations/pdf-operations.json](./skill-cartridges/document-operations/pdf-operations.json) |
-| `file`, `read`, `write`, `edit` | [skill-cartridges/file-operations/file-manipulation.json](./skill-cartridges/file-operations/file-manipulation.json) |
-| `search`, `find`, `grep` | [skill-cartridges/search-operations/code-search.json](./skill-cartridges/search-operations/code-search.json) |
-| `error`, `fail`, `retry` | [skill-cartridges/error-handling/error-recovery.json](./skill-cartridges/error-handling/error-recovery.json) |
-| `plan`, `design`, `architecture` | [skill-cartridges/planning-patterns/planning-mode.json](./skill-cartridges/planning-patterns/planning-mode.json) |
-| `agent`, `delegate`, `parallel` | [skill-cartridges/subagent-patterns/agent-delegation.json](./skill-cartridges/subagent-patterns/agent-delegation.json) |
-| `web`, `fetch`, `search online` | [skill-cartridges/web-operations/web-operations.json](./skill-cartridges/web-operations/web-operations.json) |
+Navigate the full catalog via [DECISION_TREE.md](./DECISION_TREE.md).
 
-For guided navigation, see [DECISION_TREE.md](./DECISION_TREE.md). For pre-configured agent roles, see [SPECIALIZED_ENGINEER_PROFILES.md](./SPECIALIZED_ENGINEER_PROFILES.md).
-
-## Token budget
-
-- This README: ~800 tokens
-- One skill cartridge: 500-1000 tokens
-- Load only what you need
-
-## Limitation
-
-Skills are static JSON definitions that describe behavior patterns but don't include actual code execution. You must implement the underlying tool calls referenced in the skills.
-
-## License
-
-MIT © Superinstance & Lucineer (DiGennaro et al.)
-
----
-
-<div>
-  <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> •
-  <a href="https://cocapn.ai">Cocapn</a>
-</div>
+<div style="text-align:center;padding:16px;color:#64748b;font-size:.8rem"><a href="https://the-fleet.casey-digennaro.workers.dev" style="color:#64748b">The Fleet</a> &middot; <a href="https://cocapn.ai" style="color:#64748b">Cocapn</a> &middot; Superinstance and Lucineer (DiGennaro et al.)</div>
